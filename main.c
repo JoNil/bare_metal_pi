@@ -1,0 +1,41 @@
+#include "framebuffer.h"
+
+void main()
+{
+    framebuffer_init();
+
+    int x = 100;
+    int y = 100;
+    int dx = 1;
+    int dy = 1;
+
+    for (;;) {
+
+        x += dx;
+        y += dy;
+
+        if (x > 200) {
+            dx = -1;
+            x = 200;
+        }
+
+        if (x < 100) {
+            dx = 1;
+            x = 100;
+        }
+
+        if (y > 200) {
+            dy = -1;
+            y = 200;
+        }
+
+        if (y < 100) {
+            dy = 1;
+            y = 100;
+        }
+
+        framebuffer_clear();
+
+        framebuffer_draw(x, y);
+    }
+}
