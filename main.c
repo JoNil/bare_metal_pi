@@ -1,8 +1,7 @@
 #include "framebuffer.h"
+#include "str.h"
+#include "time.h"
 #include "types.h"
-
-#define STB_SPRINTF_DECORATE(name) name
-#include "stb_sprintf.h"
 
 void main()
 {
@@ -13,7 +12,11 @@ void main()
     i32 dx = 1;
     i32 dy = 1;
 
+    i32 last_frame_time = 0;
+
     for (;;) {
+
+        u64 start = time_usec();
 
         x += dx;
         y += dy;
@@ -42,11 +45,18 @@ void main()
 
         framebuffer_draw(x, y);
 
-        char buffer[512] = {};
-        snprintf(buffer, sizeof(buffer), "%s: %d", "Hi this is a long string with text", x);
+        framebuffer_text(100, 400, "Hi this is a long string with text");
 
-        framebuffer_text(100, 400, buffer);
+        {
+            char buffer[128] = {};
+            i32_to_string(buffer, sizeof(buffer), last_frame_time / 1000);
+
+            framebuffer_text(12, 14, buffer);
+        }
 
         framebuffer_swap();
+
+        u64 end = time_usec();
+        last_frame_time = (i32)(end - start);
     }
 }

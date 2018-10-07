@@ -1,15 +1,15 @@
-#include "delay.h"
 #include "gpio.h"
+#include "time.h"
 
-#define SYSTMR_LO ((volatile unsigned int*)(MMIO_BASE + 0x00003004))
-#define SYSTMR_HI ((volatile unsigned int*)(MMIO_BASE + 0x00003008))
+#define SYSTMR_LO ((volatile u32 *)(MMIO_BASE + 0x00003004))
+#define SYSTMR_HI ((volatile u32 *)(MMIO_BASE + 0x00003008))
 
-void wait_cycles(unsigned int n)
+void wait_cycles(u32 n)
 {
-    if(n) while(n--) { asm volatile("nop"); }
+    if (n) while(n--) { asm volatile("nop"); }
 }
 
-void wait_msec(unsigned int n)
+void wait_usec(u32 n)
 {
     register u64 f;
     register u64 t;
@@ -24,25 +24,15 @@ void wait_msec(unsigned int n)
     do { asm volatile ("mrs %0, cntpct_el0" : "=r"(r)); } while (r<t);
 }
 
-unsigned long get_system_timer()
+u64 time_usec(void)
 {
-    u32 h = -1;
-    u32 l = 0;
-    
-    h = *SYSTMR_HI;
-    l = *SYSTMR_LO;
-    
+    u32 h = *SYSTMR_HI;
+    u32 l = *SYSTMR_LO;
+
     if (h != *SYSTMR_HI) {
         h = *SYSTMR_HI;
         l = *SYSTMR_LO;
     }
     
     return ((u64)h << 32) | l;
-}
-
-void wait_msec_st(unsigned int n)
-{
-    u64 t = get_system_timer();
-    
-    if (t) while (get_system_timer() < t+n);
 }
