@@ -2,4 +2,6 @@
 
 #include "types.h"
 
-extern u8 * font;
+#define GLYPH_BYTE_COUNT 95*8
+
+extern u8 font[GLYPH_BYTE_COUNT];

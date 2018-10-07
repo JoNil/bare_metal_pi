@@ -39,7 +39,7 @@ void main()
 
         framebuffer_draw(x, y);
 
-        framebuffer_text(100, 400, "Hej");
+        framebuffer_text(100, 400, "Hi this is a long string with text");
 
         framebuffer_swap();
     }
