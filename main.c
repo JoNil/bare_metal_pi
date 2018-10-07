@@ -38,5 +38,7 @@ void main()
         framebuffer_clear();
 
         framebuffer_draw(x, y);
+
+        framebuffer_swap();
     }
 }

@@ -4,12 +4,10 @@
 
 #define MBOX_BUFFER_SIZE 1024
 
-/* a properly aligned buffer */
 extern volatile u32 mbox[MBOX_BUFFER_SIZE];
 
 #define MBOX_REQUEST    0
 
-/* channels */
 #define MBOX_CH_POWER   0
 #define MBOX_CH_FB      1
 #define MBOX_CH_VUART   2
@@ -20,7 +18,6 @@ extern volatile u32 mbox[MBOX_BUFFER_SIZE];
 #define MBOX_CH_COUNT   7
 #define MBOX_CH_PROP    8
 
-/* tags */
 #define MBOX_TAG_SETPOWER       0x28001
 #define MBOX_TAG_SETCLKRATE     0x38002
 #define MBOX_TAG_LAST           0
