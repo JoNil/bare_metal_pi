@@ -1,13 +1,16 @@
 #include "mbox.h"
+#include "types.h"
 
-unsigned int width;
-unsigned int height;
-unsigned int pitch;
-unsigned char * framebuffer;
+u32 width;
+u32 height;
+u32 pitch;
+u8 * framebuffer;
+
+u8 * current_buffer;
 
 void framebuffer_init(void)
 {
-    unsigned int index = 0;
+    u32 index = 0;
 
     mbox[index++] = 35*4;
     mbox[index++] = MBOX_REQUEST;
@@ -40,14 +43,6 @@ void framebuffer_init(void)
     mbox[index++] = 4;
     mbox[index++] = 0;       //RGB, not BGR preferably
 
-    /*mbox[index++] = 0x4800a; // Set overscan
-    mbox[index++] = 16;
-    mbox[index++] = 16;
-    mbox[index++] = 0;
-    mbox[index++] = 0;
-    mbox[index++] = 0;
-    mbox[index++] = 0;*/
-
     mbox[index++] = 0x40001; // Get framebuffer, gets alignment on request
     mbox[index++] = 8;
     mbox[index++] = 8;
@@ -67,41 +62,41 @@ void framebuffer_init(void)
         width = mbox[5];
         height = mbox[6];
         pitch = mbox[33];
-        framebuffer = (void*)((unsigned long)mbox[28]);
+        framebuffer = (void*)((u64)mbox[28]);
     }
 }
 
 void framebuffer_clear(void) {
 
-    unsigned int color = 0xff240A30;
+    u32 color = 0xff240A30;
 
-    for (int i = 0; i < height; ++i) {
+    for (i32 i = 0; i < height; ++i) {
 
-        unsigned char * line = framebuffer + pitch*i;
+        u8 * line = framebuffer + pitch*i;
 
-        for (int j = 0; j < width; ++j) {
+        for (i32 j = 0; j < width; ++j) {
 
-            *(unsigned int *)line = color;
+            *(u32 *)line = color;
             line += 4;
         }
     }
 }
 
-void framebuffer_draw(int x, int y) {
+void framebuffer_draw(i32 x, i32 y) {
 
-    unsigned char * ptr = framebuffer + 4*x + pitch*y;
+    u8 * ptr = framebuffer + 4*x + pitch*y;
 
-    unsigned char * line = ptr;
+    u8 * line = ptr;
 
-    unsigned int color = 0xff00ff00;
+    u32 color = 0xff00ff00;
 
-    for (int i = 0; i < 100; ++i) {
+    for (i32 i = 0; i < 100; ++i) {
 
         line = ptr + pitch*i;
 
-        for (int j = 0; j < 100; ++j) {
+        for (i32 j = 0; j < 100; ++j) {
 
-            *(unsigned int *)line = color;
+            *(u32 *)line = color;
             line += 4;
         }
     }

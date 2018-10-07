@@ -1,9 +1,11 @@
 #pragma once
 
+#include "types.h"
+
 #define MBOX_BUFFER_SIZE 1024
 
 /* a properly aligned buffer */
-extern volatile unsigned int mbox[MBOX_BUFFER_SIZE];
+extern volatile u32 mbox[MBOX_BUFFER_SIZE];
 
 #define MBOX_REQUEST    0
 
@@ -23,4 +25,4 @@ extern volatile unsigned int mbox[MBOX_BUFFER_SIZE];
 #define MBOX_TAG_SETCLKRATE     0x38002
 #define MBOX_TAG_LAST           0
 
-int mbox_call(unsigned char ch);
+i32 mbox_call(u8 ch);

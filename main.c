@@ -1,13 +1,14 @@
 #include "framebuffer.h"
+#include "types.h"
 
 void main()
 {
     framebuffer_init();
 
-    int x = 100;
-    int y = 100;
-    int dx = 1;
-    int dy = 1;
+    i32 x = 100;
+    i32 y = 100;
+    i32 dx = 1;
+    i32 dy = 1;
 
     for (;;) {
 
