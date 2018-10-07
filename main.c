@@ -1,6 +1,9 @@
 #include "framebuffer.h"
 #include "types.h"
 
+#define STB_SPRINTF_DECORATE(name) name
+#include "stb_sprintf.h"
+
 void main()
 {
     framebuffer_init();
@@ -39,7 +42,10 @@ void main()
 
         framebuffer_draw(x, y);
 
-        framebuffer_text(100, 400, "Hi this is a long string with text");
+        char buffer[512] = {};
+        snprintf(buffer, sizeof(buffer), "%s: %d", "Hi this is a long string with text", x);
+
+        framebuffer_text(100, 400, buffer);
 
         framebuffer_swap();
     }
