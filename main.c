@@ -52,7 +52,7 @@ void main()
             i32_to_string(buffer, sizeof(buffer), last_frame_time / 1000);
 
             framebuffer_text(12, 14, buffer);
-        }
+        } 
 
         framebuffer_swap();
 

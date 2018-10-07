@@ -5,7 +5,7 @@ S_OBJS = $(S_SRCS:.s=.o)
 
 OBJS   = $(C_OBJS) $(S_OBJS)
 
-CFLAGS = -Wall -ffreestanding -nostdinc -nostdlib -nostartfiles
+CFLAGS = -Wall -O2 -ffreestanding -nostdinc -nostdlib -nostartfiles
 
 all:
 	$(MAKE) clean

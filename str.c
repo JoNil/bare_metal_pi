@@ -13,8 +13,9 @@ void i32_to_string(char * buffer, i32 size, i32 v)
 
     index -= 1;
 
-    for (i32 i = 0; i < index / 2; ++i) {
+    for (i32 i = 0; i < (index + 1) / 2; ++i) {
+    	char tmp = buffer[i];
     	buffer[i] = buffer[index - i];
+    	buffer[index - i] = tmp;
     }
-
 }
