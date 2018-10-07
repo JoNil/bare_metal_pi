@@ -1,4 +1,5 @@
 #include "assert.h"
+#include "font.h"
 #include "mbox.h"
 #include "types.h"
 
@@ -87,19 +88,48 @@ void framebuffer_draw(i32 x, i32 y) {
 
     u8 * ptr = current_buffer + 4*x + pitch*y;
 
-    u8 * line = ptr;
-
     u32 color = 0xff00ff00;
 
     for (i32 i = 0; i < 100; ++i) {
 
-        line = ptr + pitch*i;
+        u8 * line = ptr + pitch*i;
 
         for (i32 j = 0; j < 100; ++j) {
 
             *(u32 *)line = color;
             line += 4;
         }
+    }
+}
+
+void framebuffer_text(i32 x, i32 y, const char * str) {
+
+    const u32 color = 0xfff0f0f0;
+
+    i32 x_offset = 0;
+
+    while (*str != 0) {
+
+        u8 * glyph = font + 8 * (*str - 0x20);
+        u8 * ptr = current_buffer + 4*(x + x_offset) + pitch*y;
+
+        for (i32 i = 0; i < 8; ++i) {
+
+            u8 * glyph_line = glyph + i;
+            u8 * line = ptr + pitch*i;
+
+            for (i32 j = 0 ; j < 8; ++j) {
+
+                if ((*glyph_line >> j) & 0x1) {
+                    *(u32 *)ptr = color;
+                }
+
+                line += 4;
+            }
+        }
+
+        str += 1;
+        x_offset += 10;
     }
 }
 

@@ -39,6 +39,8 @@ void main()
 
         framebuffer_draw(x, y);
 
+        framebuffer_text(100, 400, "Hej");
+
         framebuffer_swap();
     }
 }
