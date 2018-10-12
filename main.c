@@ -2,10 +2,17 @@
 #include "str.h"
 #include "time.h"
 #include "types.h"
+#include "uart.h"
 
 void main()
 {
+    uart_init();
+
+    uart_puts("Uart inited\n");
+
     framebuffer_init();
+
+    uart_puts("Framebuffer inited\n");
 
     i32 x = 100;
     i32 y = 100;
@@ -52,6 +59,8 @@ void main()
             i32_to_string(buffer, sizeof(buffer), last_frame_time / 1000);
 
             framebuffer_text(12, 14, buffer);
+            uart_puts(buffer);
+            uart_send('\n');
         } 
 
         framebuffer_swap();

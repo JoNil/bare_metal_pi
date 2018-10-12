@@ -20,7 +20,6 @@ all:
 kernel8.img: start.o $(OBJS)
 	aarch64-linux-gnu-ld -nostdlib -nostartfiles $(OBJS) -T link.ld -o kernel8.elf
 	aarch64-linux-gnu-objcopy -O binary kernel8.elf kernel8.img
-	xcopy.exe /Y kernel8.img E:/
 
 clean:
 	rm kernel8.elf *.o >/dev/null 2>/dev/null || true
