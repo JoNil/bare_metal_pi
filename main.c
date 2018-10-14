@@ -3,6 +3,7 @@
 #include "time.h"
 #include "types.h"
 #include "uart.h"
+#include "mmu.h"
 
 void main()
 {
