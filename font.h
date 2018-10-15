@@ -4,4 +4,4 @@
 
 #define GLYPH_BYTE_COUNT 95*8
 
-extern u8 font[GLYPH_BYTE_COUNT];
+extern const u8 font[GLYPH_BYTE_COUNT];

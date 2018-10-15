@@ -110,12 +110,12 @@ void framebuffer_text(i32 x, i32 y, const char * str)
 
     while (*str != 0) {
 
-        u8 * glyph = font + 8 * (*str - 0x20);
+        const u8 * glyph = font + 8 * (*str - 0x20);
         u8 * ptr = current_buffer + 4*(x + x_offset) + pitch*y;
 
         for (i32 i = 0; i < 8; ++i) {
 
-            u8 * glyph_line = glyph + i;
+            const u8 * glyph_line = glyph + i;
             u8 * line = ptr + pitch*i;
 
             for (i32 j = 0 ; j < 8; ++j) {

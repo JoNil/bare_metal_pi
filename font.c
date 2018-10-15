@@ -1,7 +1,7 @@
 #include "font.h"
 #include "types.h"
 
-u8 font[GLYPH_BYTE_COUNT] = {
+const u8 font[GLYPH_BYTE_COUNT] = {
     // Space " "
     0b00000000,
     0b00000000,
