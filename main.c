@@ -1,9 +1,10 @@
 #include "framebuffer.h"
+#include "mmu.h"
+#include "reload.h"
 #include "str.h"
 #include "time.h"
 #include "types.h"
 #include "uart.h"
-#include "mmu.h"
 
 void main()
 {

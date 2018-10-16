@@ -30,9 +30,10 @@ __attribute__((section (".text.reload")))
 void reload_initial(void)
 {
 
-    reload_uart_send('R');
     reload_uart_send('I');
     reload_uart_send('n');
+    reload_uart_send('i');
+    reload_uart_send('t');
 
     for (;;) {
         reload_uart_send(reload_uart_getc());       
