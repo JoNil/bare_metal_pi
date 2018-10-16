@@ -167,6 +167,7 @@ dependencies = [
 name = "rpi-reload-server"
 version = "0.1.0"
 dependencies = [
+ "byteorder 1.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "serialport 3.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 

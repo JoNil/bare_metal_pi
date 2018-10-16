@@ -19,6 +19,7 @@ all:
 
 kernel8.img: start.o $(OBJS)
 	aarch64-linux-gnu-ld -nostdlib -nostartfiles $(OBJS) -T link.ld -o kernel8.elf
+	aarch64-linux-gnu-objdump kernel8.elf -D > kernal8.txt
 	aarch64-linux-gnu-objcopy -O binary kernel8.elf kernel8.img
 
 clean:

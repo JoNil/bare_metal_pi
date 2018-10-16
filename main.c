@@ -12,6 +12,8 @@ void main()
 
     uart_puts("Uart inited\n");
 
+    reload_initial();
+
     framebuffer_init();
 
     uart_puts("Framebuffer inited\n");

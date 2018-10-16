@@ -3,8 +3,8 @@ extern crate serialport;
 
 use byteorder::{LittleEndian, WriteBytesExt};
 use std::error;
-use std::fs::read;
-use std::io::{BufReader, BufWriter, BufRead, ErrorKind};
+use std::fs;
+use std::io::{BufReader, BufWriter, BufRead, Write, ErrorKind};
 use std::time::Duration;
 
 enum Action {
@@ -13,6 +13,7 @@ enum Action {
 }
 
 fn main() -> Result<(), Box<error::Error>> {
+    
     let s = serialport::SerialPortSettings {
         baud_rate: 115200,
         data_bits: serialport::DataBits::Eight,
@@ -22,22 +23,22 @@ fn main() -> Result<(), Box<error::Error>> {
         timeout: Duration::from_millis(1),
     };
     
-    let sp = serialport::open_with_settings("COM3", &s)?;
+    let sp = serialport::open_with_settings("COM9", &s)?;
 
-    let mut reader = BufReader::new(sp.try_clone()?;
-    let mut writer = BufWriter::new(sp.try_clone()?)
+    let mut reader = BufReader::new(sp.try_clone()?);
+    let mut writer = BufWriter::new(sp.try_clone()?);
 
     loop {
         let mut line = String::new();
 
         let mut action = Action::None;
 
-        match port.read_line(&mut line) {
+        match reader.read_line(&mut line) {
             Ok(_) => {
 
                 let lt = line.trim();
 
-                println!("{}", lt),
+                println!("{}", lt);
 
                 if lt.starts_with("Init") {
                     action = Action::SendKernal;
@@ -48,13 +49,12 @@ fn main() -> Result<(), Box<error::Error>> {
         }
 
         match action {
-            None => (),
-            SendKernal => {
-                let kernal = fs.read("../kernel8.img")?
-
+            Action::None => (),
+            Action::SendKernal => {
+                let kernal = fs::read("../kernel8.img")?;
                 
-                port.write_u32::<LittleEndian>(kernal.size())?;
-                port.write(kernal)?;
+                writer.write_u32::<LittleEndian>(kernal.len() as u32)?;
+                writer.write(&kernal)?;
             }
         }
     }
