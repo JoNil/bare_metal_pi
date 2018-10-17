@@ -5,4 +5,5 @@ authors = ["Jonathan Nilsson <jonathan@voysys.se>"]
 
 [dependencies]
 byteorder = "1"
+hexdump = "0.1.0"
 serialport = "3"

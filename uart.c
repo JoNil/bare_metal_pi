@@ -48,29 +48,23 @@ void uart_init()
     *UART0_CR = 0x301;     // enable Tx, Rx, FIFO
 }
 
-void uart_send(unsigned int c) {
-    // Wait until we can send
+void uart_send(unsigned int c)
+{
     do { asm volatile("nop"); } while (*UART0_FR & 0x20);
-    // Write the character to the buffer
+    
     *UART0_DR = c;
 }
 
-char uart_getc() {
-    char r;
-    // Wait until something is in the buffer
+char uart_getc()
+{
     do { asm volatile("nop"); } while (*UART0_FR & 0x10);
-    // read it and return
-    r = (char)(*UART0_DR);
-    // convert carrige return to newline
-    return r == '\r' ? '\n' : r;
+
+    return (char)(*UART0_DR);
 }
 
-void uart_puts(char *s) {
-    while(*s) {
-        // convert newline to carrige return + newline
-        if (*s == '\n') {
-            uart_send('\r');
-        }
+void uart_puts(char *s)
+{
+    while (*s) {
         uart_send(*s++);
     }
 }
@@ -79,7 +73,7 @@ void uart_hex(unsigned int d) {
     unsigned int n = 0;
     for (int c = 28; c >= 0; c -= 4) {
         // Get highest tetrad
-        n= (d >> c) & 0xF;
+        n = (d >> c) & 0xF;
 
         // 0-9 => '0'-'9', 10-15 => 'A'-'F'
         n += n > 9 ? 0x37 : 0x30;
