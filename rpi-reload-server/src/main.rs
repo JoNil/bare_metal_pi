@@ -79,8 +79,6 @@ fn main() -> Result<(), Box<error::Error>> {
                 writer.flush()?;
 
                 {
-                    println!("Send size");
-
                     let mut bytes_read = 0;
 
                     let mut buffer = vec![0u8; 4];
@@ -89,8 +87,6 @@ fn main() -> Result<(), Box<error::Error>> {
                         match reader.read(&mut buffer[bytes_read..]) {
                             Ok(amount) => { 
                                 bytes_read += amount;
-
-                                println!("{}", bytes_read);
                             },
                             Err(ref e) if e.kind() == ErrorKind::TimedOut => (),
                             Err(e) => println!("{:?}", e),
@@ -101,8 +97,6 @@ fn main() -> Result<(), Box<error::Error>> {
 
                     assert!(c.read_u32::<LittleEndian>()? == kernal.len() as u32);
                 }
-
-                println!("Send kernal");
 
                 for chunk in kernal.chunks(512) {
                     writer.write_all(&chunk)?;
@@ -116,7 +110,6 @@ fn main() -> Result<(), Box<error::Error>> {
                         match reader.read(&mut buffer[bytes_read..]) {
                             Ok(amount) => { 
                                 bytes_read += amount;
-                                println!("{}", bytes_read);
                             },
                             Err(ref e) if e.kind() == ErrorKind::TimedOut => (),
                             Err(e) => println!("{:?}", e),
@@ -124,11 +117,9 @@ fn main() -> Result<(), Box<error::Error>> {
                     }
 
                     assert!(chunk == &buffer[..]);
-
-                    println!("Send chunk");
-
-                    hexdump::hexdump(&buffer);
                 }
+
+                println!("Sent");
             }
         }
     }

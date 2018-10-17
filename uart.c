@@ -62,7 +62,7 @@ char uart_getc()
     return (char)(*UART0_DR);
 }
 
-void uart_puts(char *s)
+void uart_puts(const char * s)
 {
     while (*s) {
         uart_send(*s++);

@@ -6,13 +6,15 @@
 #include "types.h"
 #include "uart.h"
 
+const char * DATE = __TIMESTAMP__;
+
 void main()
 {
     uart_init();
 
     uart_puts("Uart inited\n");
 
-    reload_initial();
+    reload_initial(DATE);
 
     framebuffer_init();
 

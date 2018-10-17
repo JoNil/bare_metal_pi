@@ -22,12 +22,24 @@ static char reload_uart_getc()
 }
 
 __attribute__((section (".text.reload")))
-void reload_initial(void)
+static void reload_uart_puts(const char * s)
+{
+    while (*s) {
+        reload_uart_send(*s++);
+    }
+}
+
+__attribute__((section (".text.reload")))
+void reload_initial(const char * date)
 {
     reload_uart_send('I');
     reload_uart_send('n');
     reload_uart_send('i');
     reload_uart_send('t');
+    reload_uart_send(' ');
+
+    reload_uart_puts(date);
+
     reload_uart_send('\n');
 
     for (;;) {
