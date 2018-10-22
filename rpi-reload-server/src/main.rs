@@ -15,6 +15,7 @@ use std::io::Cursor;
 enum Action {
     None,
     SendKernal,
+    SendZeroSize,
 }
 
 fn main() -> Result<(), Box<error::Error>> {
@@ -90,6 +91,8 @@ fn main() -> Result<(), Box<error::Error>> {
 
                     if should_upload {
                         action = Action::SendKernal;
+                    } else {
+                        action = Action::SendZeroSize;
                     }
                 }
             }
@@ -144,6 +147,30 @@ fn main() -> Result<(), Box<error::Error>> {
                     }
 
                     assert!(chunk == &buffer[..]);
+                }
+            },
+            Action::SendZeroSize => {
+                writer.write_u32::<LittleEndian>(0 as u32)?;
+                writer.flush()?;
+
+                {
+                    let mut bytes_read = 0;
+
+                    let mut buffer = vec![0u8; 4];
+
+                    while bytes_read < buffer.len() {
+                        match reader.read(&mut buffer[bytes_read..]) {
+                            Ok(amount) => {
+                                bytes_read += amount;
+                            }
+                            Err(ref e) if e.kind() == ErrorKind::TimedOut => (),
+                            Err(e) => println!("{:?}", e),
+                        }
+                    }
+
+                    let mut c = Cursor::new(&buffer);
+
+                    assert!(c.read_u32::<LittleEndian>()? == 0);
                 }
             }
         }

@@ -1,8 +1,17 @@
 .section ".text.boot"
 
 .global _start
+.global _reload_start
 
 _start:
+    // save arguments in registers (we will need them later for the new kernel)
+    // I choosed x10-x13 because instructions generated from C by gcc does not
+    // touch them. You can check that with "aarch64-elf-objdump -d kernel8.elf"
+    mov     x10, x0
+    mov     x11, x1
+    mov     x12, x2
+    mov     x13, x3
+
     // read cpu id, stop slave cores
     mrs     x1, mpidr_el1
     and     x1, x1, #3
@@ -112,3 +121,4 @@ _vectors:
     mrs     x3, spsr_el1
     mrs     x4, far_el1
     b       exc_handler
+_reload_start:

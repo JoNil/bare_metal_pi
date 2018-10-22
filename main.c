@@ -21,6 +21,8 @@ void main()
 
     uart_puts("Framebuffer inited\n");
 
+    uart_puts("Reloaded 3!!!\n");
+
     i32 x = 100;
     i32 y = 100;
     i32 dx = 1;

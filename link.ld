@@ -4,7 +4,7 @@ SECTIONS
     .text : {
         KEEP(*(.text.boot));
         KEEP(*(.text.reload));
-        _copy_start = .;
+        _reload_end = .;
         *(.text .text.* .gnu.linkonce.t*);
     }
     
