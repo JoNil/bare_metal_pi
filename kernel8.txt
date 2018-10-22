@@ -715,7 +715,7 @@ Disassembly of section .text:
    80af4:	00000000 	.inst	0x00000000 ; undefined
 
 0000000000080af8 <mbox_call>:
-   80af8:	d0000004 	adrp	x4, 82000 <date>
+   80af8:	d0000004 	adrp	x4, 82000 <DATE>
    80afc:	12000c00 	and	w0, w0, #0xf
    80b00:	d2971301 	mov	x1, #0xb898                	// #47256
    80b04:	f9400882 	ldr	x2, [x4, #16]
@@ -745,8 +745,8 @@ Disassembly of section .text:
    80b64:	d65f03c0 	ret
 
 0000000000080b68 <mmu_init>:
-   80b68:	d0000009 	adrp	x9, 82000 <date>
-   80b6c:	d0000005 	adrp	x5, 82000 <date>
+   80b68:	d0000009 	adrp	x9, 82000 <DATE>
+   80b6c:	d0000005 	adrp	x5, 82000 <DATE>
    80b70:	d280e861 	mov	x1, #0x743                 	// #1859
    80b74:	d2808826 	mov	x6, #0x441                 	// #1089
    80b78:	f9401922 	ldr	x2, [x9, #48]
@@ -884,7 +884,7 @@ Disassembly of section .text:
 
 0000000000080d70 <uart_init>:
    80d70:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
-   80d74:	d0000001 	adrp	x1, 82000 <date>
+   80d74:	d0000001 	adrp	x1, 82000 <DATE>
    80d78:	d2820600 	mov	x0, #0x1030                	// #4144
    80d7c:	52800407 	mov	w7, #0x20                  	// #32
    80d80:	910003fd 	mov	x29, sp
@@ -1027,7 +1027,7 @@ Disassembly of section .text:
    80f7c:	52800102 	mov	w2, #0x8                   	// #8
    80f80:	910003fd 	mov	x29, sp
    80f84:	f9000bf3 	str	x19, [sp, #16]
-   80f88:	d0000013 	adrp	x19, 82000 <date>
+   80f88:	d0000013 	adrp	x19, 82000 <DATE>
    80f8c:	72a00080 	movk	w0, #0x4, lsl #16
    80f90:	5280a004 	mov	w4, #0x500                 	// #1280
    80f94:	f9400a61 	ldr	x1, [x19, #16]
@@ -1096,11 +1096,11 @@ Disassembly of section .text:
    81090:	35000040 	cbnz	w0, 81098 <framebuffer_init+0x128>
    81094:	940001e9 	bl	81838 <abort>
    81098:	f9400a60 	ldr	x0, [x19, #16]
-   8109c:	b0000005 	adrp	x5, 82000 <date>
-   810a0:	b0000004 	adrp	x4, 82000 <date>
-   810a4:	b0000003 	adrp	x3, 82000 <date>
-   810a8:	b0000002 	adrp	x2, 82000 <date>
-   810ac:	b0000001 	adrp	x1, 82000 <date>
+   8109c:	b0000005 	adrp	x5, 82000 <DATE>
+   810a0:	b0000004 	adrp	x4, 82000 <DATE>
+   810a4:	b0000003 	adrp	x3, 82000 <DATE>
+   810a8:	b0000002 	adrp	x2, 82000 <DATE>
+   810ac:	b0000001 	adrp	x1, 82000 <DATE>
    810b0:	f9400bf3 	ldr	x19, [sp, #16]
    810b4:	b9407006 	ldr	w6, [x0, #112]
    810b8:	f94028a5 	ldr	x5, [x5, #80]
@@ -1127,13 +1127,13 @@ Disassembly of section .text:
    8110c:	d503201f 	nop
 
 0000000000081110 <framebuffer_clear>:
-   81110:	b0000006 	adrp	x6, 82000 <date>
+   81110:	b0000006 	adrp	x6, 82000 <DATE>
    81114:	f94024c6 	ldr	x6, [x6, #72]
    81118:	b94000c0 	ldr	w0, [x6]
    8111c:	34000380 	cbz	w0, 8118c <framebuffer_clear+0x7c>
-   81120:	b0000000 	adrp	x0, 82000 <date>
-   81124:	b0000007 	adrp	x7, 82000 <date>
-   81128:	b0000008 	adrp	x8, 82000 <date>
+   81120:	b0000000 	adrp	x0, 82000 <DATE>
+   81124:	b0000007 	adrp	x7, 82000 <DATE>
+   81128:	b0000008 	adrp	x8, 82000 <DATE>
    8112c:	52814603 	mov	w3, #0xa30                 	// #2608
    81130:	f9402000 	ldr	x0, [x0, #64]
    81134:	52800005 	mov	w5, #0x0                   	// #0
@@ -1161,8 +1161,8 @@ Disassembly of section .text:
    8118c:	d65f03c0 	ret
 
 0000000000081190 <framebuffer_draw>:
-   81190:	b0000002 	adrp	x2, 82000 <date>
-   81194:	b0000003 	adrp	x3, 82000 <date>
+   81190:	b0000002 	adrp	x2, 82000 <DATE>
+   81194:	b0000003 	adrp	x3, 82000 <DATE>
    81198:	531e7400 	lsl	w0, w0, #2
    8119c:	52800004 	mov	w4, #0x0                   	// #0
    811a0:	f9401c42 	ldr	x2, [x2, #56]
@@ -1191,9 +1191,9 @@ Disassembly of section .text:
 00000000000811f8 <framebuffer_text>:
    811f8:	39400043 	ldrb	w3, [x2]
    811fc:	34000503 	cbz	w3, 8129c <framebuffer_text+0xa4>
-   81200:	b0000004 	adrp	x4, 82000 <date>
-   81204:	b000000c 	adrp	x12, 82000 <date>
-   81208:	b000000d 	adrp	x13, 82000 <date>
+   81200:	b0000004 	adrp	x4, 82000 <DATE>
+   81204:	b000000c 	adrp	x12, 82000 <DATE>
+   81208:	b000000d 	adrp	x13, 82000 <DATE>
    8120c:	531e7400 	lsl	w0, w0, #2
    81210:	f9402084 	ldr	x4, [x4, #64]
    81214:	529e1e07 	mov	w7, #0xf0f0                	// #61680
@@ -1234,9 +1234,9 @@ Disassembly of section .text:
 
 00000000000812a0 <framebuffer_swap>:
    812a0:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
-   812a4:	b0000002 	adrp	x2, 82000 <date>
-   812a8:	b0000000 	adrp	x0, 82000 <date>
-   812ac:	b0000001 	adrp	x1, 82000 <date>
+   812a4:	b0000002 	adrp	x2, 82000 <DATE>
+   812a8:	b0000000 	adrp	x0, 82000 <DATE>
+   812ac:	b0000001 	adrp	x1, 82000 <DATE>
    812b0:	910003fd 	mov	x29, sp
    812b4:	f9401042 	ldr	x2, [x2, #32]
    812b8:	f9402000 	ldr	x0, [x0, #64]
@@ -1247,7 +1247,7 @@ Disassembly of section .text:
    812cc:	eb03005f 	cmp	x2, x3
    812d0:	540002e0 	b.eq	8132c <framebuffer_swap+0x8c>  // b.none
    812d4:	f9000003 	str	x3, [x0]
-   812d8:	b0000001 	adrp	x1, 82000 <date>
+   812d8:	b0000001 	adrp	x1, 82000 <DATE>
    812dc:	52800405 	mov	w5, #0x20                  	// #32
    812e0:	52900123 	mov	w3, #0x8009                	// #32777
    812e4:	52800102 	mov	w2, #0x8                   	// #8
@@ -1268,7 +1268,7 @@ Disassembly of section .text:
    81320:	d65f03c0 	ret
    81324:	a8c17bfd 	ldp	x29, x30, [sp], #16
    81328:	14000144 	b	81838 <abort>
-   8132c:	b0000001 	adrp	x1, 82000 <date>
+   8132c:	b0000001 	adrp	x1, 82000 <DATE>
    81330:	f9401c21 	ldr	x1, [x1, #56]
    81334:	b9400021 	ldr	w1, [x1]
    81338:	1b017c81 	mul	w1, w4, w1
@@ -1335,7 +1335,7 @@ Disassembly of section .text:
    8141c:	912de000 	add	x0, x0, #0xb78
    81420:	97fffeae 	bl	80ed8 <uart_puts>
    81424:	52800037 	mov	w23, #0x1                   	// #1
-   81428:	b0000000 	adrp	x0, 82000 <date>
+   81428:	b0000000 	adrp	x0, 82000 <DATE>
    8142c:	2a1703f8 	mov	w24, w23
    81430:	52800015 	mov	w21, #0x0                   	// #0
    81434:	72a20c5a 	movk	w26, #0x1062, lsl #16
@@ -1424,12 +1424,12 @@ Disassembly of section .text:
    81578:	f1000c1f 	cmp	x0, #0x3
    8157c:	540000a1 	b.ne	81590 <exc_handler+0x50>  // b.any
    81580:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81584:	91302000 	add	x0, x0, #0xc08
+   81584:	91300000 	add	x0, x0, #0xc00
    81588:	97fffe54 	bl	80ed8 <uart_puts>
    8158c:	d503201f 	nop
    81590:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
    81594:	d35afe93 	lsr	x19, x20, #26
-   81598:	91304000 	add	x0, x0, #0xc10
+   81598:	91302000 	add	x0, x0, #0xc08
    8159c:	97fffe4f 	bl	80ed8 <uart_puts>
    815a0:	f100867f 	cmp	x19, #0x21
    815a4:	54001200 	b.eq	817e4 <exc_handler+0x2a4>  // b.none
@@ -1442,10 +1442,10 @@ Disassembly of section .text:
    815c0:	f100927f 	cmp	x19, #0x24
    815c4:	54000761 	b.ne	816b0 <exc_handler+0x170>  // b.any
    815c8:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   815cc:	9132e000 	add	x0, x0, #0xcb8
+   815cc:	9132c000 	add	x0, x0, #0xcb0
    815d0:	97fffe42 	bl	80ed8 <uart_puts>
    815d4:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   815d8:	9137e000 	add	x0, x0, #0xdf8
+   815d8:	9137c000 	add	x0, x0, #0xdf0
    815dc:	97fffe3f 	bl	80ed8 <uart_puts>
    815e0:	d3420e80 	ubfx	x0, x20, #2, #2
    815e4:	f100081f 	cmp	x0, #0x2
@@ -1455,7 +1455,7 @@ Disassembly of section .text:
    815f4:	f100041f 	cmp	x0, #0x1
    815f8:	54000be0 	b.eq	81774 <exc_handler+0x234>  // b.none
    815fc:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81600:	91344000 	add	x0, x0, #0xd10
+   81600:	91342000 	add	x0, x0, #0xd08
    81604:	97fffe35 	bl	80ed8 <uart_puts>
    81608:	92400680 	and	x0, x20, #0x3
    8160c:	f100081f 	cmp	x0, #0x2
@@ -1465,43 +1465,43 @@ Disassembly of section .text:
    8161c:	f100041f 	cmp	x0, #0x1
    81620:	540009a0 	b.eq	81754 <exc_handler+0x214>  // b.none
    81624:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81628:	9135c000 	add	x0, x0, #0xd70
+   81628:	9135a000 	add	x0, x0, #0xd68
    8162c:	97fffe2b 	bl	80ed8 <uart_puts>
    81630:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81634:	9136c000 	add	x0, x0, #0xdb0
+   81634:	9136a000 	add	x0, x0, #0xda8
    81638:	97fffe28 	bl	80ed8 <uart_puts>
    8163c:	d360fe80 	lsr	x0, x20, #32
    81640:	97fffe36 	bl	80f18 <uart_hex>
    81644:	2a1403e0 	mov	w0, w20
    81648:	97fffe34 	bl	80f18 <uart_hex>
    8164c:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81650:	91370000 	add	x0, x0, #0xdc0
+   81650:	9136e000 	add	x0, x0, #0xdb8
    81654:	97fffe21 	bl	80ed8 <uart_puts>
    81658:	d360fea0 	lsr	x0, x21, #32
    8165c:	97fffe2f 	bl	80f18 <uart_hex>
    81660:	2a1503e0 	mov	w0, w21
    81664:	97fffe2d 	bl	80f18 <uart_hex>
    81668:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   8166c:	91374000 	add	x0, x0, #0xdd0
+   8166c:	91372000 	add	x0, x0, #0xdc8
    81670:	97fffe1a 	bl	80ed8 <uart_puts>
    81674:	d360fec0 	lsr	x0, x22, #32
    81678:	97fffe28 	bl	80f18 <uart_hex>
    8167c:	2a1603e0 	mov	w0, w22
    81680:	97fffe26 	bl	80f18 <uart_hex>
    81684:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81688:	91378000 	add	x0, x0, #0xde0
+   81688:	91376000 	add	x0, x0, #0xdd8
    8168c:	97fffe13 	bl	80ed8 <uart_puts>
    81690:	d360fee0 	lsr	x0, x23, #32
    81694:	97fffe21 	bl	80f18 <uart_hex>
    81698:	2a1703e0 	mov	w0, w23
    8169c:	97fffe1f 	bl	80f18 <uart_hex>
    816a0:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   816a4:	9137c000 	add	x0, x0, #0xdf0
+   816a4:	9137a000 	add	x0, x0, #0xde8
    816a8:	97fffe0c 	bl	80ed8 <uart_puts>
    816ac:	14000000 	b	816ac <exc_handler+0x16c>
    816b0:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
    816b4:	d1009273 	sub	x19, x19, #0x24
-   816b8:	91306000 	add	x0, x0, #0xc18
+   816b8:	91304000 	add	x0, x0, #0xc10
    816bc:	97fffe07 	bl	80ed8 <uart_puts>
    816c0:	f100067f 	cmp	x19, #0x1
    816c4:	54fffb68 	b.hi	81630 <exc_handler+0xf0>  // b.pmore
@@ -1513,7 +1513,7 @@ Disassembly of section .text:
    816dc:	f100067f 	cmp	x19, #0x1
    816e0:	54fffe81 	b.ne	816b0 <exc_handler+0x170>  // b.any
    816e4:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   816e8:	91308000 	add	x0, x0, #0xc20
+   816e8:	91306000 	add	x0, x0, #0xc18
    816ec:	97fffdfb 	bl	80ed8 <uart_puts>
    816f0:	17ffffd0 	b	81630 <exc_handler+0xf0>
    816f4:	f100567f 	cmp	x19, #0x15
@@ -1521,51 +1521,51 @@ Disassembly of section .text:
    816fc:	f100827f 	cmp	x19, #0x20
    81700:	54fffd81 	b.ne	816b0 <exc_handler+0x170>  // b.any
    81704:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81708:	91316000 	add	x0, x0, #0xc58
+   81708:	91314000 	add	x0, x0, #0xc50
    8170c:	97fffdf3 	bl	80ed8 <uart_puts>
    81710:	17ffffc8 	b	81630 <exc_handler+0xf0>
    81714:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81718:	9130c000 	add	x0, x0, #0xc30
+   81718:	9130a000 	add	x0, x0, #0xc28
    8171c:	97fffdef 	bl	80ed8 <uart_puts>
    81720:	17ffffc4 	b	81630 <exc_handler+0xf0>
    81724:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81728:	91312000 	add	x0, x0, #0xc48
+   81728:	91310000 	add	x0, x0, #0xc40
    8172c:	97fffdeb 	bl	80ed8 <uart_puts>
    81730:	17ffffc0 	b	81630 <exc_handler+0xf0>
    81734:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81738:	91334000 	add	x0, x0, #0xcd0
+   81738:	91332000 	add	x0, x0, #0xcc8
    8173c:	97fffde7 	bl	80ed8 <uart_puts>
    81740:	17ffffa5 	b	815d4 <exc_handler+0x94>
    81744:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81748:	91306000 	add	x0, x0, #0xc18
+   81748:	91304000 	add	x0, x0, #0xc10
    8174c:	97fffde3 	bl	80ed8 <uart_puts>
    81750:	17ffffb8 	b	81630 <exc_handler+0xf0>
    81754:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81758:	91360000 	add	x0, x0, #0xd80
+   81758:	9135e000 	add	x0, x0, #0xd78
    8175c:	97fffddf 	bl	80ed8 <uart_puts>
    81760:	17ffffb4 	b	81630 <exc_handler+0xf0>
    81764:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81768:	91350000 	add	x0, x0, #0xd40
+   81768:	9134e000 	add	x0, x0, #0xd38
    8176c:	97fffddb 	bl	80ed8 <uart_puts>
    81770:	17ffffa6 	b	81608 <exc_handler+0xc8>
    81774:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81778:	9134a000 	add	x0, x0, #0xd28
+   81778:	91348000 	add	x0, x0, #0xd20
    8177c:	97fffdd7 	bl	80ed8 <uart_puts>
    81780:	17ffffa2 	b	81608 <exc_handler+0xc8>
    81784:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81788:	91356000 	add	x0, x0, #0xd58
+   81788:	91354000 	add	x0, x0, #0xd50
    8178c:	97fffdd3 	bl	80ed8 <uart_puts>
    81790:	17ffff9e 	b	81608 <exc_handler+0xc8>
    81794:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81798:	91368000 	add	x0, x0, #0xda0
+   81798:	91366000 	add	x0, x0, #0xd98
    8179c:	97fffdcf 	bl	80ed8 <uart_puts>
    817a0:	17ffffa4 	b	81630 <exc_handler+0xf0>
    817a4:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   817a8:	91364000 	add	x0, x0, #0xd90
+   817a8:	91362000 	add	x0, x0, #0xd88
    817ac:	97fffdcb 	bl	80ed8 <uart_puts>
    817b0:	17ffffa0 	b	81630 <exc_handler+0xf0>
    817b4:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   817b8:	91326000 	add	x0, x0, #0xc98
+   817b8:	91324000 	add	x0, x0, #0xc90
    817bc:	97fffdc7 	bl	80ed8 <uart_puts>
    817c0:	17ffff9c 	b	81630 <exc_handler+0xf0>
    817c4:	f1009a7f 	cmp	x19, #0x26
@@ -1573,27 +1573,27 @@ Disassembly of section .text:
    817cc:	f100b27f 	cmp	x19, #0x2c
    817d0:	54fff701 	b.ne	816b0 <exc_handler+0x170>  // b.any
    817d4:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   817d8:	91340000 	add	x0, x0, #0xd00
+   817d8:	9133e000 	add	x0, x0, #0xcf8
    817dc:	97fffdbf 	bl	80ed8 <uart_puts>
    817e0:	17ffff94 	b	81630 <exc_handler+0xf0>
    817e4:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   817e8:	9131e000 	add	x0, x0, #0xc78
+   817e8:	9131c000 	add	x0, x0, #0xc70
    817ec:	97fffdbb 	bl	80ed8 <uart_puts>
    817f0:	17ffff90 	b	81630 <exc_handler+0xf0>
    817f4:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   817f8:	912fa000 	add	x0, x0, #0xbe8
+   817f8:	912f8000 	add	x0, x0, #0xbe0
    817fc:	97fffdb7 	bl	80ed8 <uart_puts>
    81800:	17ffff64 	b	81590 <exc_handler+0x50>
    81804:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81808:	912fe000 	add	x0, x0, #0xbf8
+   81808:	912fc000 	add	x0, x0, #0xbf0
    8180c:	97fffdb3 	bl	80ed8 <uart_puts>
    81810:	17ffff60 	b	81590 <exc_handler+0x50>
    81814:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81818:	91300000 	add	x0, x0, #0xc00
+   81818:	912fe000 	add	x0, x0, #0xbf8
    8181c:	97fffdaf 	bl	80ed8 <uart_puts>
    81820:	17ffff5c 	b	81590 <exc_handler+0x50>
    81824:	90000000 	adrp	x0, 81000 <framebuffer_init+0x90>
-   81828:	9133a000 	add	x0, x0, #0xce8
+   81828:	91338000 	add	x0, x0, #0xce0
    8182c:	97fffdab 	bl	80ed8 <uart_puts>
    81830:	17ffff80 	b	81630 <exc_handler+0xf0>
    81834:	00000000 	.inst	0x00000000 ; undefined
@@ -1829,150 +1829,149 @@ Disassembly of section .rodata:
    81bbc:	65742068 	.word	0x65742068
    81bc0:	00007478 	.word	0x00007478
    81bc4:	00000000 	.word	0x00000000
-   81bc8:	20756854 	.word	0x20756854
-   81bcc:	2074634f 	.word	0x2074634f
-   81bd0:	30203831 	.word	0x30203831
-   81bd4:	32313a30 	.word	0x32313a30
-   81bd8:	2033303a 	.word	0x2033303a
-   81bdc:	38313032 	.word	0x38313032
-	...
-   81be8:	636e7953 	.word	0x636e7953
-   81bec:	6e6f7268 	.word	0x6e6f7268
-   81bf0:	0073756f 	.word	0x0073756f
+   81bc8:	38313032 	.word	0x38313032
+   81bcc:	2d30312d 	.word	0x2d30312d
+   81bd0:	305f3332 	.word	0x305f3332
+   81bd4:	34323a30 	.word	0x34323a30
+   81bd8:	0038303a 	.word	0x0038303a
+   81bdc:	00000000 	.word	0x00000000
+   81be0:	636e7953 	.word	0x636e7953
+   81be4:	6e6f7268 	.word	0x6e6f7268
+   81be8:	0073756f 	.word	0x0073756f
+   81bec:	00000000 	.word	0x00000000
+   81bf0:	00515249 	.word	0x00515249
    81bf4:	00000000 	.word	0x00000000
-   81bf8:	00515249 	.word	0x00515249
+   81bf8:	00514946 	.word	0x00514946
    81bfc:	00000000 	.word	0x00000000
-   81c00:	00514946 	.word	0x00514946
-   81c04:	00000000 	.word	0x00000000
-   81c08:	72724553 	.word	0x72724553
-   81c0c:	0000726f 	.word	0x0000726f
-   81c10:	0000203a 	.word	0x0000203a
-   81c14:	00000000 	.word	0x00000000
-   81c18:	6e6b6e55 	.word	0x6e6b6e55
-   81c1c:	006e776f 	.word	0x006e776f
-   81c20:	70617254 	.word	0x70617254
-   81c24:	20646570 	.word	0x20646570
-   81c28:	2f494657 	.word	0x2f494657
-   81c2c:	00454657 	.word	0x00454657
-   81c30:	656c6c49 	.word	0x656c6c49
-   81c34:	206c6167 	.word	0x206c6167
-   81c38:	63657865 	.word	0x63657865
-   81c3c:	6f697475 	.word	0x6f697475
-   81c40:	0000006e 	.word	0x0000006e
-   81c44:	00000000 	.word	0x00000000
-   81c48:	74737953 	.word	0x74737953
-   81c4c:	63206d65 	.word	0x63206d65
-   81c50:	006c6c61 	.word	0x006c6c61
-   81c54:	00000000 	.word	0x00000000
-   81c58:	74736e49 	.word	0x74736e49
-   81c5c:	74637572 	.word	0x74637572
-   81c60:	206e6f69 	.word	0x206e6f69
-   81c64:	726f6261 	.word	0x726f6261
-   81c68:	6c202c74 	.word	0x6c202c74
-   81c6c:	7265776f 	.word	0x7265776f
-   81c70:	004c4520 	.word	0x004c4520
-   81c74:	00000000 	.word	0x00000000
-   81c78:	74736e49 	.word	0x74736e49
-   81c7c:	74637572 	.word	0x74637572
-   81c80:	206e6f69 	.word	0x206e6f69
-   81c84:	726f6261 	.word	0x726f6261
-   81c88:	73202c74 	.word	0x73202c74
-   81c8c:	20656d61 	.word	0x20656d61
-   81c90:	00004c45 	.word	0x00004c45
-   81c94:	00000000 	.word	0x00000000
-   81c98:	74736e49 	.word	0x74736e49
-   81c9c:	74637572 	.word	0x74637572
-   81ca0:	206e6f69 	.word	0x206e6f69
-   81ca4:	67696c61 	.word	0x67696c61
-   81ca8:	6e656d6e 	.word	0x6e656d6e
-   81cac:	61662074 	.word	0x61662074
-   81cb0:	00746c75 	.word	0x00746c75
-   81cb4:	00000000 	.word	0x00000000
-   81cb8:	61746144 	.word	0x61746144
-   81cbc:	6f626120 	.word	0x6f626120
-   81cc0:	202c7472 	.word	0x202c7472
-   81cc4:	65776f6c 	.word	0x65776f6c
-   81cc8:	4c452072 	.word	0x4c452072
-   81ccc:	00000000 	.word	0x00000000
-   81cd0:	61746144 	.word	0x61746144
-   81cd4:	6f626120 	.word	0x6f626120
-   81cd8:	202c7472 	.word	0x202c7472
-   81cdc:	656d6173 	.word	0x656d6173
-   81ce0:	004c4520 	.word	0x004c4520
-   81ce4:	00000000 	.word	0x00000000
-   81ce8:	63617453 	.word	0x63617453
-   81cec:	6c61206b 	.word	0x6c61206b
-   81cf0:	6d6e6769 	.word	0x6d6e6769
-   81cf4:	20746e65 	.word	0x20746e65
-   81cf8:	6c756166 	.word	0x6c756166
-   81cfc:	00000074 	.word	0x00000074
-   81d00:	616f6c46 	.word	0x616f6c46
-   81d04:	676e6974 	.word	0x676e6974
-   81d08:	696f7020 	.word	0x696f7020
-   81d0c:	0000746e 	.word	0x0000746e
-   81d10:	72646441 	.word	0x72646441
-   81d14:	20737365 	.word	0x20737365
-   81d18:	657a6973 	.word	0x657a6973
-   81d1c:	75616620 	.word	0x75616620
-   81d20:	0000746c 	.word	0x0000746c
-   81d24:	00000000 	.word	0x00000000
-   81d28:	6e617254 	.word	0x6e617254
-   81d2c:	74616c73 	.word	0x74616c73
-   81d30:	206e6f69 	.word	0x206e6f69
-   81d34:	6c756166 	.word	0x6c756166
-   81d38:	00000074 	.word	0x00000074
-   81d3c:	00000000 	.word	0x00000000
-   81d40:	65636341 	.word	0x65636341
-   81d44:	66207373 	.word	0x66207373
-   81d48:	2067616c 	.word	0x2067616c
-   81d4c:	6c756166 	.word	0x6c756166
-   81d50:	00000074 	.word	0x00000074
-   81d54:	00000000 	.word	0x00000000
-   81d58:	6d726550 	.word	0x6d726550
-   81d5c:	69737369 	.word	0x69737369
-   81d60:	66206e6f 	.word	0x66206e6f
-   81d64:	746c7561 	.word	0x746c7561
+   81c00:	72724553 	.word	0x72724553
+   81c04:	0000726f 	.word	0x0000726f
+   81c08:	0000203a 	.word	0x0000203a
+   81c0c:	00000000 	.word	0x00000000
+   81c10:	6e6b6e55 	.word	0x6e6b6e55
+   81c14:	006e776f 	.word	0x006e776f
+   81c18:	70617254 	.word	0x70617254
+   81c1c:	20646570 	.word	0x20646570
+   81c20:	2f494657 	.word	0x2f494657
+   81c24:	00454657 	.word	0x00454657
+   81c28:	656c6c49 	.word	0x656c6c49
+   81c2c:	206c6167 	.word	0x206c6167
+   81c30:	63657865 	.word	0x63657865
+   81c34:	6f697475 	.word	0x6f697475
+   81c38:	0000006e 	.word	0x0000006e
+   81c3c:	00000000 	.word	0x00000000
+   81c40:	74737953 	.word	0x74737953
+   81c44:	63206d65 	.word	0x63206d65
+   81c48:	006c6c61 	.word	0x006c6c61
+   81c4c:	00000000 	.word	0x00000000
+   81c50:	74736e49 	.word	0x74736e49
+   81c54:	74637572 	.word	0x74637572
+   81c58:	206e6f69 	.word	0x206e6f69
+   81c5c:	726f6261 	.word	0x726f6261
+   81c60:	6c202c74 	.word	0x6c202c74
+   81c64:	7265776f 	.word	0x7265776f
+   81c68:	004c4520 	.word	0x004c4520
+   81c6c:	00000000 	.word	0x00000000
+   81c70:	74736e49 	.word	0x74736e49
+   81c74:	74637572 	.word	0x74637572
+   81c78:	206e6f69 	.word	0x206e6f69
+   81c7c:	726f6261 	.word	0x726f6261
+   81c80:	73202c74 	.word	0x73202c74
+   81c84:	20656d61 	.word	0x20656d61
+   81c88:	00004c45 	.word	0x00004c45
+   81c8c:	00000000 	.word	0x00000000
+   81c90:	74736e49 	.word	0x74736e49
+   81c94:	74637572 	.word	0x74637572
+   81c98:	206e6f69 	.word	0x206e6f69
+   81c9c:	67696c61 	.word	0x67696c61
+   81ca0:	6e656d6e 	.word	0x6e656d6e
+   81ca4:	61662074 	.word	0x61662074
+   81ca8:	00746c75 	.word	0x00746c75
+   81cac:	00000000 	.word	0x00000000
+   81cb0:	61746144 	.word	0x61746144
+   81cb4:	6f626120 	.word	0x6f626120
+   81cb8:	202c7472 	.word	0x202c7472
+   81cbc:	65776f6c 	.word	0x65776f6c
+   81cc0:	4c452072 	.word	0x4c452072
+   81cc4:	00000000 	.word	0x00000000
+   81cc8:	61746144 	.word	0x61746144
+   81ccc:	6f626120 	.word	0x6f626120
+   81cd0:	202c7472 	.word	0x202c7472
+   81cd4:	656d6173 	.word	0x656d6173
+   81cd8:	004c4520 	.word	0x004c4520
+   81cdc:	00000000 	.word	0x00000000
+   81ce0:	63617453 	.word	0x63617453
+   81ce4:	6c61206b 	.word	0x6c61206b
+   81ce8:	6d6e6769 	.word	0x6d6e6769
+   81cec:	20746e65 	.word	0x20746e65
+   81cf0:	6c756166 	.word	0x6c756166
+   81cf4:	00000074 	.word	0x00000074
+   81cf8:	616f6c46 	.word	0x616f6c46
+   81cfc:	676e6974 	.word	0x676e6974
+   81d00:	696f7020 	.word	0x696f7020
+   81d04:	0000746e 	.word	0x0000746e
+   81d08:	72646441 	.word	0x72646441
+   81d0c:	20737365 	.word	0x20737365
+   81d10:	657a6973 	.word	0x657a6973
+   81d14:	75616620 	.word	0x75616620
+   81d18:	0000746c 	.word	0x0000746c
+   81d1c:	00000000 	.word	0x00000000
+   81d20:	6e617254 	.word	0x6e617254
+   81d24:	74616c73 	.word	0x74616c73
+   81d28:	206e6f69 	.word	0x206e6f69
+   81d2c:	6c756166 	.word	0x6c756166
+   81d30:	00000074 	.word	0x00000074
+   81d34:	00000000 	.word	0x00000000
+   81d38:	65636341 	.word	0x65636341
+   81d3c:	66207373 	.word	0x66207373
+   81d40:	2067616c 	.word	0x2067616c
+   81d44:	6c756166 	.word	0x6c756166
+   81d48:	00000074 	.word	0x00000074
+   81d4c:	00000000 	.word	0x00000000
+   81d50:	6d726550 	.word	0x6d726550
+   81d54:	69737369 	.word	0x69737369
+   81d58:	66206e6f 	.word	0x66206e6f
+   81d5c:	746c7561 	.word	0x746c7561
 	...
-   81d70:	20746120 	.word	0x20746120
-   81d74:	6576656c 	.word	0x6576656c
-   81d78:	0030206c 	.word	0x0030206c
-   81d7c:	00000000 	.word	0x00000000
-   81d80:	20746120 	.word	0x20746120
-   81d84:	6576656c 	.word	0x6576656c
-   81d88:	0031206c 	.word	0x0031206c
-   81d8c:	00000000 	.word	0x00000000
-   81d90:	20746120 	.word	0x20746120
-   81d94:	6576656c 	.word	0x6576656c
-   81d98:	0032206c 	.word	0x0032206c
-   81d9c:	00000000 	.word	0x00000000
-   81da0:	20746120 	.word	0x20746120
-   81da4:	6576656c 	.word	0x6576656c
-   81da8:	0033206c 	.word	0x0033206c
-   81dac:	00000000 	.word	0x00000000
-   81db0:	20200a3a 	.word	0x20200a3a
-   81db4:	5f525345 	.word	0x5f525345
-   81db8:	20314c45 	.word	0x20314c45
-   81dbc:	00000000 	.word	0x00000000
-   81dc0:	524c4520 	.word	0x524c4520
-   81dc4:	314c455f 	.word	0x314c455f
-   81dc8:	00000020 	.word	0x00000020
-   81dcc:	00000000 	.word	0x00000000
-   81dd0:	5053200a 	.word	0x5053200a
-   81dd4:	455f5253 	.word	0x455f5253
-   81dd8:	0020314c 	.word	0x0020314c
-   81ddc:	00000000 	.word	0x00000000
-   81de0:	52414620 	.word	0x52414620
-   81de4:	314c455f 	.word	0x314c455f
-   81de8:	00000020 	.word	0x00000020
+   81d68:	20746120 	.word	0x20746120
+   81d6c:	6576656c 	.word	0x6576656c
+   81d70:	0030206c 	.word	0x0030206c
+   81d74:	00000000 	.word	0x00000000
+   81d78:	20746120 	.word	0x20746120
+   81d7c:	6576656c 	.word	0x6576656c
+   81d80:	0031206c 	.word	0x0031206c
+   81d84:	00000000 	.word	0x00000000
+   81d88:	20746120 	.word	0x20746120
+   81d8c:	6576656c 	.word	0x6576656c
+   81d90:	0032206c 	.word	0x0032206c
+   81d94:	00000000 	.word	0x00000000
+   81d98:	20746120 	.word	0x20746120
+   81d9c:	6576656c 	.word	0x6576656c
+   81da0:	0033206c 	.word	0x0033206c
+   81da4:	00000000 	.word	0x00000000
+   81da8:	20200a3a 	.word	0x20200a3a
+   81dac:	5f525345 	.word	0x5f525345
+   81db0:	20314c45 	.word	0x20314c45
+   81db4:	00000000 	.word	0x00000000
+   81db8:	524c4520 	.word	0x524c4520
+   81dbc:	314c455f 	.word	0x314c455f
+   81dc0:	00000020 	.word	0x00000020
+   81dc4:	00000000 	.word	0x00000000
+   81dc8:	5053200a 	.word	0x5053200a
+   81dcc:	455f5253 	.word	0x455f5253
+   81dd0:	0020314c 	.word	0x0020314c
+   81dd4:	00000000 	.word	0x00000000
+   81dd8:	52414620 	.word	0x52414620
+   81ddc:	314c455f 	.word	0x314c455f
+   81de0:	00000020 	.word	0x00000020
+   81de4:	00000000 	.word	0x00000000
+   81de8:	0000000a 	.word	0x0000000a
    81dec:	00000000 	.word	0x00000000
-   81df0:	0000000a 	.word	0x0000000a
+   81df0:	0000202c 	.word	0x0000202c
    81df4:	00000000 	.word	0x00000000
-   81df8:	0000202c 	.word	0x0000202c
-   81dfc:	00000000 	.word	0x00000000
 
 Disassembly of section .data:
 
-0000000000082000 <date>:
+0000000000082000 <DATE>:
    82000:	00081bc8 	.word	0x00081bc8
    82004:	00000000 	.word	0x00000000
 

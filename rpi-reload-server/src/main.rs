@@ -1,8 +1,10 @@
 extern crate byteorder;
+extern crate chrono;
 extern crate hexdump;
 extern crate serialport;
 
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
+use chrono::{offset::Local, offset::TimeZone};
 use std::error;
 use std::fs;
 use std::io::{BufRead, BufReader, BufWriter, ErrorKind, Read, Write};
@@ -63,7 +65,32 @@ fn main() -> Result<(), Box<error::Error>> {
                 println!("{}", lt);
 
                 if lt.starts_with("Init") {
-                    action = Action::SendKernal;
+                    let build_date_file = fs::read_to_string("../build_date.h")?;
+
+                    let build_date = Local
+                        .datetime_from_str(
+                            build_date_file
+                                .lines()
+                                .filter(|s| s.contains("#define BUILD_DATE"))
+                                .next()
+                                .unwrap()
+                                .split("BUILD_DATE")
+                                .nth(1)
+                                .unwrap()
+                                .trim()
+                                .trim_matches('\"'),
+                            "%Y-%m-%d_%H:%M:%S",
+                        ).unwrap();
+
+                    let rpi_build_date = Local
+                        .datetime_from_str(lt.split(" ").nth(1).unwrap(), "%Y-%m-%d_%H:%M:%S")
+                        .unwrap();
+
+                    let should_upload = build_date > rpi_build_date;
+
+                    if should_upload {
+                        action = Action::SendKernal;
+                    }
                 }
             }
             Err(ref e) if e.kind() == ErrorKind::TimedOut => (),
@@ -85,9 +112,9 @@ fn main() -> Result<(), Box<error::Error>> {
 
                     while bytes_read < buffer.len() {
                         match reader.read(&mut buffer[bytes_read..]) {
-                            Ok(amount) => { 
+                            Ok(amount) => {
                                 bytes_read += amount;
-                            },
+                            }
                             Err(ref e) if e.kind() == ErrorKind::TimedOut => (),
                             Err(e) => println!("{:?}", e),
                         }
@@ -108,9 +135,9 @@ fn main() -> Result<(), Box<error::Error>> {
 
                     while bytes_read < buffer.len() {
                         match reader.read(&mut buffer[bytes_read..]) {
-                            Ok(amount) => { 
+                            Ok(amount) => {
                                 bytes_read += amount;
-                            },
+                            }
                             Err(ref e) if e.kind() == ErrorKind::TimedOut => (),
                             Err(e) => println!("{:?}", e),
                         }
@@ -118,8 +145,6 @@ fn main() -> Result<(), Box<error::Error>> {
 
                     assert!(chunk == &buffer[..]);
                 }
-
-                println!("Sent");
             }
         }
     }

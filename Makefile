@@ -7,9 +7,15 @@ OBJS   = $(C_OBJS) $(S_OBJS)
 
 CFLAGS = -Wall -O2 -ffreestanding -nostdinc -nostdlib -nostartfiles
 
+DATE = $(shell date '+%Y-%m-%d_%H:%M:%S')
+
 all:
 	$(MAKE) clean
+	$(MAKE) build_date
 	$(MAKE) kernel8.img
+
+build_date:
+	echo '#pragma once\n\n#define BUILD_DATE "${DATE}"' > build_date.h
 
 %.o: %.s
 	aarch64-linux-gnu-gcc $(CFLAGS) -c $< -o $@
@@ -19,10 +25,10 @@ all:
 
 kernel8.img: start.o $(OBJS)
 	aarch64-linux-gnu-ld -nostdlib -nostartfiles $(OBJS) -T link.ld -o kernel8.elf
-	aarch64-linux-gnu-objdump kernel8.elf -D > kernal8.txt
+	aarch64-linux-gnu-objdump kernel8.elf -D > kernel8.txt
 	aarch64-linux-gnu-objcopy -O binary kernel8.elf kernel8.img
 
 clean:
-	rm kernel8.elf *.o >/dev/null 2>/dev/null || true
+	rm kernel8.elf build_date.h *.o >/dev/null 2>/dev/null || true
 
-.PHONY: all clean
+.PHONY: all clean build_date

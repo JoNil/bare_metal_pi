@@ -1,3 +1,4 @@
+#include "build_date.h"
 #include "framebuffer.h"
 #include "mmu.h"
 #include "reload.h"
@@ -6,7 +7,7 @@
 #include "types.h"
 #include "uart.h"
 
-const char * DATE = __TIMESTAMP__;
+const char * DATE = BUILD_DATE;
 
 void main()
 {
