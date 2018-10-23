@@ -74,5 +74,7 @@ void main()
 
         u64 end = time_usec();
         last_frame_time = (i32)(end - start);
+
+        reload_initial(DATE);
     }
 }
