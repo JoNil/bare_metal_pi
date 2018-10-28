@@ -15,47 +15,47 @@ Disassembly of section .text:
    8001c:	d503205f 	wfe
    80020:	17ffffff 	b	8001c <_start+0x1c>
    80024:	58004be1 	ldr	x1, 809a0 <_reload_start+0x8>
-   80028:	d5384240 	mrs	x0, currentel
-   8002c:	927e0400 	and	x0, x0, #0xc
-   80030:	f100301f 	cmp	x0, #0xc
-   80034:	54000101 	b.ne	80054 <_start+0x54>  // b.any
-   80038:	d280b622 	mov	x2, #0x5b1                 	// #1457
-   8003c:	d51e1102 	msr	scr_el3, x2
-   80040:	d2807922 	mov	x2, #0x3c9                 	// #969
-   80044:	d51e4002 	msr	spsr_el3, x2
-   80048:	10000062 	adr	x2, 80054 <_start+0x54>
-   8004c:	d51e4022 	msr	elr_el3, x2
-   80050:	d69f03e0 	eret
-   80054:	f100101f 	cmp	x0, #0x4
-   80058:	54000280 	b.eq	800a8 <_start+0xa8>  // b.none
-   8005c:	d51c4101 	msr	sp_el1, x1
-   80060:	d53ce100 	mrs	x0, cnthctl_el2
-   80064:	b2400400 	orr	x0, x0, #0x3
-   80068:	d51ce100 	msr	cnthctl_el2, x0
-   8006c:	d51ce07f 	msr	cntvoff_el2, xzr
-   80070:	d2b00000 	mov	x0, #0x80000000            	// #2147483648
-   80074:	b27f0000 	orr	x0, x0, #0x2
-   80078:	d51c1100 	msr	hcr_el2, x0
-   8007c:	d53c1100 	mrs	x0, hcr_el2
-   80080:	d2810002 	mov	x2, #0x800                 	// #2048
-   80084:	f2a61a02 	movk	x2, #0x30d0, lsl #16
-   80088:	d5181002 	msr	sctlr_el1, x2
-   8008c:	580048e2 	ldr	x2, 809a8 <_reload_start+0x10>
-   80090:	d518c002 	msr	vbar_el1, x2
-   80094:	d2807882 	mov	x2, #0x3c4                 	// #964
-   80098:	d51c4002 	msr	spsr_el2, x2
-   8009c:	10000062 	adr	x2, 800a8 <_start+0xa8>
-   800a0:	d51c4022 	msr	elr_el2, x2
-   800a4:	d69f03e0 	eret
-   800a8:	9100003f 	mov	sp, x1
-   800ac:	58004821 	ldr	x1, 809b0 <_reload_start+0x18>
-   800b0:	18004742 	ldr	w2, 80998 <_reload_start>
-   800b4:	34000082 	cbz	w2, 800c4 <_start+0xc4>
-   800b8:	f800843f 	str	xzr, [x1], #8
-   800bc:	51000442 	sub	w2, w2, #0x1
-   800c0:	35ffffa2 	cbnz	w2, 800b4 <_start+0xb4>
-   800c4:	94000531 	bl	81588 <main>
-   800c8:	17ffffd5 	b	8001c <_start+0x1c>
+   80028:	9100003f 	mov	sp, x1
+   8002c:	58004be2 	ldr	x2, 809a8 <_reload_start+0x10>
+   80030:	d51cc002 	msr	vbar_el2, x2
+   80034:	58004be1 	ldr	x1, 809b0 <_reload_start+0x18>
+   80038:	18004b02 	ldr	w2, 80998 <_reload_start>
+   8003c:	34000082 	cbz	w2, 8004c <_start+0x4c>
+   80040:	f800843f 	str	xzr, [x1], #8
+   80044:	51000442 	sub	w2, w2, #0x1
+   80048:	35ffffa2 	cbnz	w2, 8003c <_start+0x3c>
+   8004c:	9400054f 	bl	81588 <main>
+   80050:	17fffff3 	b	8001c <_start+0x1c>
+   80054:	d503201f 	nop
+   80058:	d503201f 	nop
+   8005c:	d503201f 	nop
+   80060:	d503201f 	nop
+   80064:	d503201f 	nop
+   80068:	d503201f 	nop
+   8006c:	d503201f 	nop
+   80070:	d503201f 	nop
+   80074:	d503201f 	nop
+   80078:	d503201f 	nop
+   8007c:	d503201f 	nop
+   80080:	d503201f 	nop
+   80084:	d503201f 	nop
+   80088:	d503201f 	nop
+   8008c:	d503201f 	nop
+   80090:	d503201f 	nop
+   80094:	d503201f 	nop
+   80098:	d503201f 	nop
+   8009c:	d503201f 	nop
+   800a0:	d503201f 	nop
+   800a4:	d503201f 	nop
+   800a8:	d503201f 	nop
+   800ac:	d503201f 	nop
+   800b0:	d503201f 	nop
+   800b4:	d503201f 	nop
+   800b8:	d503201f 	nop
+   800bc:	d503201f 	nop
+   800c0:	d503201f 	nop
+   800c4:	d503201f 	nop
+   800c8:	d503201f 	nop
    800cc:	d503201f 	nop
    800d0:	d503201f 	nop
    800d4:	d503201f 	nop
@@ -1937,9 +1937,9 @@ Disassembly of section .rodata:
    81d6c:	00000000 	.word	0x00000000
    81d70:	38313032 	.word	0x38313032
    81d74:	2d30312d 	.word	0x2d30312d
-   81d78:	315f3332 	.word	0x315f3332
-   81d7c:	37343a30 	.word	0x37343a30
-   81d80:	0037343a 	.word	0x0037343a
+   81d78:	315f3832 	.word	0x315f3832
+   81d7c:	33303a37 	.word	0x33303a37
+   81d80:	0038353a 	.word	0x0038353a
    81d84:	00000000 	.word	0x00000000
    81d88:	636e7953 	.word	0x636e7953
    81d8c:	6e6f7268 	.word	0x6e6f7268
