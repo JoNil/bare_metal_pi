@@ -66,37 +66,38 @@ fn main() -> Result<(), Box<error::Error>> {
                 println!("{}", lt);
 
                 if lt.starts_with("Init") {
-                    let build_date_file = fs::read_to_string("../build_date.h")?;
+                    if let Ok(build_date_file) = fs::read_to_string("../build_date.h") {
 
-                    let build_date = Local
-                        .datetime_from_str(
-                            build_date_file
-                                .lines()
-                                .filter(|s| s.contains("#define BUILD_DATE"))
-                                .next()
-                                .unwrap()
-                                .split("BUILD_DATE")
-                                .nth(1)
-                                .unwrap()
-                                .trim()
-                                .trim_matches('\"'),
-                            "%Y-%m-%d_%H:%M:%S",
-                        ).unwrap();
+                        let build_date = Local
+                            .datetime_from_str(
+                                build_date_file
+                                    .lines()
+                                    .filter(|s| s.contains("#define BUILD_DATE"))
+                                    .next()
+                                    .unwrap()
+                                    .split("BUILD_DATE")
+                                    .nth(1)
+                                    .unwrap()
+                                    .trim()
+                                    .trim_matches('\"'),
+                                "%Y-%m-%d_%H:%M:%S",
+                            ).unwrap();
 
-                    let maybe_rpi_build_date = lt.split(" ").nth(1).and_then(|line_date| {
-                        Local.datetime_from_str(line_date, "%Y-%m-%d_%H:%M:%S").ok()
-                    });
+                        let maybe_rpi_build_date = lt.split(" ").nth(1).and_then(|line_date| {
+                            Local.datetime_from_str(line_date, "%Y-%m-%d_%H:%M:%S").ok()
+                        });
 
-                    let should_upload = if let Some(rpi_build_date) = maybe_rpi_build_date {
-                        build_date > rpi_build_date
-                    } else {
-                        false
-                    };
+                        let should_upload = if let Some(rpi_build_date) = maybe_rpi_build_date {
+                            build_date > rpi_build_date
+                        } else {
+                            false
+                        };
 
-                    if should_upload {
-                        action = Action::SendKernal;
-                    } else {
-                        action = Action::SendZeroSize;
+                        if should_upload {
+                            action = Action::SendKernal;
+                        } else {
+                            action = Action::SendZeroSize;
+                        }
                     }
                 }
             }
