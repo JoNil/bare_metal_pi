@@ -2,6 +2,7 @@ Bare Metal Pi
 =============
 https://web.stanford.edu/class/cs140e/docs/<br/>
 https://web.stanford.edu/class/cs140e/assignments/3-spawn/<br/>
+https://github.com/jwmcglynn/cs140e<br/>
 https://jsandler18.github.io/<br/>
 https://github.com/PeterLemon/RaspberryPi<br/>
 https://github.com/rsta2/circle<br/>
@@ -13,3 +14,4 @@ https://github.com/cs107e<br/>
 
 For RPI 1 but maybe still usefull<br/>
 https://github.com/dwelch67/raspberrypi/tree/master/mmu<br/>
+
