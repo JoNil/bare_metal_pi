@@ -6,6 +6,7 @@
 #include "time.h"
 #include "types.h"
 #include "uart.h"
+#include "v3d.h"
 
 const char * DATE = BUILD_DATE;
 
@@ -20,6 +21,10 @@ void main()
     framebuffer_init();
 
     uart_puts("Framebuffer inited\n");
+
+    //v3d_init();
+
+    //uart_puts("V3d inited\n");
 
     i32 x = 100;
     i32 y = 100;

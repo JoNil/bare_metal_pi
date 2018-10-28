@@ -14,41 +14,41 @@ void framebuffer_init(void)
     mbox[0] = 35*4;
     mbox[1] = MBOX_REQUEST;
 
-    mbox[2] = 0x48003;  // Set phy wh
+    mbox[2] = MBOX_TAG_SET_PHYSICAL_DISPLAY;
     mbox[3] = 8;
     mbox[4] = 8;
     mbox[5] = 1280;     // FrameBufferInfo.width
     mbox[6] = 720;      // FrameBufferInfo.height
 
-    mbox[7] = 0x48004;  // Set virt wh
+    mbox[7] = MBOX_TAG_SET_VIRTUAL_BUFFER;
     mbox[8] = 8;
     mbox[9] = 8;
     mbox[10] = 1280;    // FrameBufferInfo.virtual_width
     mbox[11] = 1440;    // FrameBufferInfo.virtual_height
     
-    mbox[12] = 0x48009; // Set virt offset
+    mbox[12] = MBOX_TAG_SET_VIRTUAL_OFFSET;
     mbox[13] = 8;
     mbox[14] = 8;
     mbox[15] = 0;       // FrameBufferInfo.x_offset
     mbox[16] = 0;       // FrameBufferInfo.y.offset
     
-    mbox[17] = 0x48005; // Set depth
+    mbox[17] = MBOX_TAG_SET_DEPTH;
     mbox[18] = 4;
     mbox[19] = 4;
     mbox[20] = 32;      // FrameBufferInfo.depth
 
-    mbox[21] = 0x48006; // Set pixel order
+    mbox[21] = MBOX_TAG_SET_PIXEL_ORDER;
     mbox[22] = 4;
     mbox[23] = 4;
     mbox[24] = 0;       //RGB, not BGR preferably
 
-    mbox[25] = 0x40001; // Get framebuffer, gets alignment on request
+    mbox[25] = MBOX_TAG_ALLOCATE_BUFFER;
     mbox[26] = 8;
     mbox[27] = 8;
     mbox[28] = 4096;    // FrameBufferInfo.pointer
     mbox[29] = 0;       // FrameBufferInfo.size
 
-    mbox[30] = 0x40008; // Get pitch
+    mbox[30] = MBOX_TAG_GET_PITCH;
     mbox[31] = 4;
     mbox[32] = 4;
     mbox[33] = 0;       // FrameBufferInfo.pitch
@@ -149,7 +149,7 @@ void framebuffer_swap()
     mbox[0] = 8*4;
     mbox[1] = MBOX_REQUEST;
 
-    mbox[2] = 0x48009 ;  // Set Virtual Offset
+    mbox[2] = MBOX_TAG_SET_VIRTUAL_OFFSET;
     mbox[3] = 8;
     mbox[4] = 8;
     mbox[5] = 0;        // x offset

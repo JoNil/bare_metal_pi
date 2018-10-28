@@ -1,3 +1,4 @@
+#include "assert.h"
 #include "gpio.h"
 #include "mbox.h"
 
@@ -22,15 +23,19 @@ void uart_init()
     // Set up clock for consistent divisor values
     mbox[0] = 8*4;
     mbox[1] = MBOX_REQUEST;
-    mbox[2] = MBOX_TAG_SETCLKRATE; // set clock rate
+   
+    mbox[2] = MBOX_TAG_SET_CLOCK_RATE;
     mbox[3] = 12;
     mbox[4] = 8;
-    mbox[5] = 2;           // UART clock
-    mbox[6] = 4000000;     // 4Mhz
-    mbox[7] = MBOX_TAG_LAST;
-    mbox_call(MBOX_CH_PROP);
+    mbox[5] = CLK_UART_ID;
+    mbox[6] = 4 * 1000 * 1000;
 
-    // map UART0 to GPIO pins
+    mbox[7] = MBOX_TAG_LAST;
+
+    i32 ret = mbox_call(MBOX_CH_PROP);
+    assert(ret);
+
+    // Map UART0 to GPIO pins
     r = *GPFSEL1;
     r &= ~((7 << 12) | (7 << 15)); // gpio14, gpio15
     r |= (4 << 12) | (4 << 15);    // alt0
