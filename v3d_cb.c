@@ -10,7 +10,9 @@
 #define CMD_INCREMENT_SEMAPHORE 0x07 // After Tile Lists Are Flushed Or Last Tile Written
 #define CMD_WAIT_ON_SEMAPHORE 0x08 // Wait For Frame To Complete In Other Thread
 
-#define CMD_TILE_BINNING_MODE_CONFIGURATION 0x70 // Tile Binning Mode Configuration (B)
+#define CMD_CLIP_WINDOW 0x70
+
+#define CMD_TILE_BINNING_MODE_CONFIGURATION 0x70
 
 static void v3d_cb_push_u8(v3d_command_buffer_t * cb, u8 data)
 {
@@ -33,6 +35,42 @@ void v3d_cb_init(v3d_command_buffer_t * cb, u8 * storage, u32 storage_size)
     cb->cursor = 0;
 }
 
+void v3d_cb_add_halt(v3d_command_buffer_t * cb)
+{
+    v3d_cb_push_u8(cb, CMD_HALT);
+}
+
+void v3d_cb_add_no_op(v3d_command_buffer_t * cb)
+{
+    v3d_cb_push_u8(cb, CMD_NO_OP);
+}
+
+void v3d_cb_add_flush(v3d_command_buffer_t * cb)
+{
+    v3d_cb_push_u8(cb, CMD_FLUSH);
+}
+
+void v3d_cb_add_flush_all_state(v3d_command_buffer_t * cb)
+{
+    v3d_cb_push_u8(cb, CMD_FLUSH_ALL_STATE);
+}
+
+void v3d_cb_add_start_tile_binning(v3d_command_buffer_t * cb)
+{
+    v3d_cb_push_u8(cb, CMD_START_TILE_BINNING);
+}
+
+void v3d_cb_add_increment_semaphore(v3d_command_buffer_t * cb)
+{
+    v3d_cb_push_u8(cb, CMD_INCREMENT_SEMAPHORE);
+}
+
+void v3d_cb_add_wait_on_semaphore(v3d_command_buffer_t * cb)
+{
+    v3d_cb_push_u8(cb, CMD_WAIT_ON_SEMAPHORE);
+}
+
+
 void v3d_cb_add_tile_binning_mode_configuration(
         v3d_command_buffer_t * cb,
         u32 address,
@@ -50,3 +88,4 @@ void v3d_cb_add_tile_binning_mode_configuration(
     v3d_cb_push_u8(cb, height);
     v3d_cb_push_u8(cb, data);
 }
+

@@ -30,21 +30,24 @@ void v3d_init(i32 width, i32 height)
         assert(ret);
     }
 
-    u8 command_buffer_storage[1024] = {0};
+    u8 binning_command_buffer[1024] = {0};
 
-    v3d_command_buffer_t cb = {0};
+    {
+        v3d_command_buffer_t cb = {0};
 
-    v3d_cb_init(&cb, command_buffer_storage, ARRAY_COUNT(command_buffer_storage));
+        v3d_cb_init(&cb, binning_command_buffer, ARRAY_COUNT(binning_command_buffer));
 
-    v3d_cb_add_tile_binning_mode_configuration(
-            &cb,
-            (u32)(u64)bin_memory,
-            ARRAY_COUNT(bin_memory),
-            (u32)(u64)bin_base,
-            (width + 63) / 64,
-            (height + 63) / 64,
-            TILE_BINNING_FLAGS_AUTO_INITIALISE_TILE_STATE_DATA_ARRAY);
+        v3d_cb_add_tile_binning_mode_configuration(
+                &cb,
+                (u32)(u64)bin_memory,
+                ARRAY_COUNT(bin_memory),
+                (u32)(u64)bin_base,
+                (width + 63) / 64,
+                (height + 63) / 64,
+                TILE_BINNING_FLAGS_AUTO_INITIALISE_TILE_STATE_DATA_ARRAY);
 
+        v3d_cb_add_start_tile_binning(cb);
+    }
 
 }
 

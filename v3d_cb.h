@@ -8,6 +8,14 @@ typedef struct v3d_command_buffer_s {
 
 void v3d_cb_init(v3d_command_buffer_t * cb, u8 * storage, u32 storage_size);
 
+void v3d_cb_add_halt(v3d_command_buffer_t * cb);                
+void v3d_cb_add_no_op(v3d_command_buffer_t * cb);
+void v3d_cb_add_flush(v3d_command_buffer_t * cb);               // Add Return-From-Sub-List To Tile Lists & Then Flush Tile Lists To Memory (B)
+void v3d_cb_add_flush_all_state(v3d_command_buffer_t * cb);     // Same As Flush, But Preceded By The Forced Writing Of The Current State To The Tile Lists (B)
+void v3d_cb_add_start_tile_binning(v3d_command_buffer_t * cb);  // Advances State Counter So That Initial State Items Actually Go Into Tile Lists (B)
+void v3d_cb_add_increment_semaphore(v3d_command_buffer_t * cb); // After Tile Lists Are Flushed Or Last Tile Written
+void v3d_cb_add_wait_on_semaphore(v3d_command_buffer_t * cb);   // Wait For Frame To Complete In Other Thread
+
 #define TILE_BINNING_FLAGS_MULTISAMPLE_MODE_4X                    0x01 // Multisample Mode (4X)
 #define TILE_BINNING_FLAGS_BUFFER_COLOR_DEPTH_64                  0x02 // Tile Buffer 64-Bit Color Depth
 #define TILE_BINNING_FLAGS_AUTO_INITIALISE_TILE_STATE_DATA_ARRAY  0x04 // Auto-Initialise Tile State Data Array
