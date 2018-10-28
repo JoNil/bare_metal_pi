@@ -1,5 +1,7 @@
 Bare Metal Pi
 =============
+https://bitbucket.org/okonomiyonda/jaystation2_public/src<br/>
+http://jaystation2.maisonikkoku.com/category/gpu/<br/>
 https://web.stanford.edu/class/cs140e/docs/<br/>
 https://web.stanford.edu/class/cs140e/assignments/3-spawn/<br/>
 https://jsandler18.github.io/<br/>
