@@ -1,2 +1,5 @@
 *.o
+build_date.h
+kernel8.elf
+kernel8.img
 kernel8.txt
