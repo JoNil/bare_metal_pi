@@ -83,11 +83,15 @@ fn main() -> Result<(), Box<error::Error>> {
                             "%Y-%m-%d_%H:%M:%S",
                         ).unwrap();
 
-                    let rpi_build_date = Local
-                        .datetime_from_str(lt.split(" ").nth(1).unwrap(), "%Y-%m-%d_%H:%M:%S")
-                        .unwrap();
+                    let maybe_rpi_build_date = lt.split(" ").nth(1).and_then(|line_date| {
+                        Local.datetime_from_str(line_date, "%Y-%m-%d_%H:%M:%S").ok()
+                    });
 
-                    let should_upload = build_date > rpi_build_date;
+                    let should_upload = if let Some(rpi_build_date) = maybe_rpi_build_date {
+                        build_date > rpi_build_date
+                    } else {
+                        false
+                    };
 
                     if should_upload {
                         action = Action::SendKernal;
@@ -148,7 +152,7 @@ fn main() -> Result<(), Box<error::Error>> {
 
                     assert!(chunk == &buffer[..]);
                 }
-            },
+            }
             Action::SendZeroSize => {
                 writer.write_u32::<LittleEndian>(0 as u32)?;
                 writer.flush()?;

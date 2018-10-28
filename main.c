@@ -6,7 +6,6 @@
 #include "time.h"
 #include "types.h"
 #include "uart.h"
-#include "v3d.h"
 
 const char * DATE = BUILD_DATE;
 
