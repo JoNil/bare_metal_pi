@@ -29,11 +29,11 @@ _start:
     msr     vbar_el1, x2
 
     // Start L1 Cache
-    //mrs     x0, SCTLR_EL2 // X0 = System Control Register
+    //mrs     x0, SCTLR_EL3 // X0 = System Control Register
     //orr     x0, x0, #0x0004 // Data Cache (Bit 2)
     //orr     x0, x0, #0x0800 // Branch Prediction (Bit 11)
     //orr     x0, x0, #0x1000 // Instruction Caches (Bit 12)
-    //msr     SCTLR_EL2, x0 // System Control Register = X0
+    //msr     SCTLR_EL3, x0 // System Control Register = X0
    
     // clear bss
     ldr     x1, =__bss_start
