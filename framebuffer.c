@@ -66,7 +66,7 @@ void framebuffer_init(void)
     pitch = mbox[33];
     framebuffer = (void *)((u64)mbox[28]);
 
-    current_buffer = framebuffer;
+    current_buffer = framebuffer + height*pitch;
 }
 void framebuffer_clear(void)
 {
