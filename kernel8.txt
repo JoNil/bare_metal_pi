@@ -17,7 +17,7 @@ Disassembly of section .text:
    80024:	58004be1 	ldr	x1, 809a0 <_reload_start+0x8>
    80028:	9100003f 	mov	sp, x1
    8002c:	58004be2 	ldr	x2, 809a8 <_reload_start+0x10>
-   80030:	d51cc002 	msr	vbar_el2, x2
+   80030:	d518c002 	msr	vbar_el1, x2
    80034:	58004be1 	ldr	x1, 809b0 <_reload_start+0x18>
    80038:	18004b02 	ldr	w2, 80998 <_reload_start>
    8003c:	34000082 	cbz	w2, 8004c <_start+0x4c>
@@ -1938,8 +1938,8 @@ Disassembly of section .rodata:
    81d70:	38313032 	.word	0x38313032
    81d74:	2d30312d 	.word	0x2d30312d
    81d78:	315f3832 	.word	0x315f3832
-   81d7c:	33303a37 	.word	0x33303a37
-   81d80:	0038353a 	.word	0x0038353a
+   81d7c:	30323a37 	.word	0x30323a37
+   81d80:	0038313a 	.word	0x0038313a
    81d84:	00000000 	.word	0x00000000
    81d88:	636e7953 	.word	0x636e7953
    81d8c:	6e6f7268 	.word	0x6e6f7268

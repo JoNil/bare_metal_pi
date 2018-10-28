@@ -4,15 +4,13 @@
 .global _reload_start
 
 _start:
-    // save arguments in registers (we will need them later for the new kernel)
-    // I choosed x10-x13 because instructions generated from C by gcc does not
-    // touch them. You can check that with "aarch64-elf-objdump -d kernel8.elf"
+    // Save arguments from the gpu, for later hot reload
     mov     x10, x0
     mov     x11, x1
     mov     x12, x2
     mov     x13, x3
 
-    // read cpu id, stop slave cores
+    // Read cpu id, stop slave cores
     mrs     x1, mpidr_el1
     and     x1, x1, #3
     cbz     x1, 2f
@@ -20,14 +18,15 @@ _start:
     // cpu id > 0, stop
 1:  wfe
     b       1b
+2:
 
     // Set stack before our code
-2:  ldr     x1, =_start 
-    mov     sp, x1
-
+    ldr     x1, =_start
+5:  mov     sp, x1
+   
     // set up exception handlers
     ldr     x2, =_vectors
-    msr     VBAR_EL2, x2
+    msr     vbar_el1, x2
 
     // Start L1 Cache
     //mrs     x0, SCTLR_EL2 // X0 = System Control Register
@@ -35,7 +34,7 @@ _start:
     //orr     x0, x0, #0x0800 // Branch Prediction (Bit 11)
     //orr     x0, x0, #0x1000 // Instruction Caches (Bit 12)
     //msr     SCTLR_EL2, x0 // System Control Register = X0
-
+   
     // clear bss
     ldr     x1, =__bss_start
     ldr     w2, =__bss_size
@@ -44,9 +43,10 @@ _start:
     sub     w2, w2, #1
     cbnz    w2, 3b
 
-    // jump to C code, should not return
+    // Jump to C code, should not return
 4:  bl      main
-    // for failsafe, halt this core too
+    
+    // For failsafe, halt this core too
     b       1b
 
     // important, code has to be properly aligned
