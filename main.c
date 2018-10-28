@@ -73,7 +73,7 @@ void main()
             framebuffer_text(12, 14, buffer);
             uart_puts(buffer);
             uart_send('\n');
-        } 
+        }
 
         framebuffer_swap();
 
