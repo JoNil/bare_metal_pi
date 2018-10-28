@@ -1,4 +1,3 @@
-#include "assert.h"
 #include "gpio.h"
 #include "mbox.h"
 
@@ -32,8 +31,7 @@ void uart_init()
 
     mbox[7] = MBOX_TAG_LAST;
 
-    i32 ret = mbox_call(MBOX_CH_PROP);
-    assert(ret);
+    mbox_call(MBOX_CH_PROP);
 
     // Map UART0 to GPIO pins
     r = *GPFSEL1;
