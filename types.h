@@ -1,5 +1,7 @@
 #pragma once
 
+#define ARRAY_COUNT(arr) (sizeof(arr) / sizeof((arr)[0]))
+
 typedef signed char i8;
 typedef unsigned char u8;
 

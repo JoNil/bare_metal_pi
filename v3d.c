@@ -1,35 +1,51 @@
 #include "assert.h"
 #include "mbox.h"
+#include "types.h"
 #include "v3d.h"
+#include "v3d_cb.h"
 
-#define CMD_HALT 0x00 // Control ID Code: Halt
-#define CMD_NO_OP 0x01 // Control ID Code: NOP
-#define CMD_FLUSH 0x04 // Control ID Code: Flush (Add Return-From-Sub-List To Tile Lists & Then Flush Tile Lists To Memory) (B)
-#define CMD_FLUSH_ALL_STATE 0x05 // Control ID Code: Flush All State (Same As Flush, But Preceded By The Forced Writing Of The Current State To The Tile Lists) (B)
-#define CMD_START_TILE_BINNING 0x06 // Control ID Code: Start Tile Binning (Advances State Counter So That Initial State Items Actually Go Into Tile Lists) (B)
-#define CMD_INCREMENT_SEMAPHORE 0x07 // Control ID Code: Increment Semaphore (After Tile Lists Are Flushed Or Last Tile Written)
-#define CMD_WAIT_ON_SEMAPHORE 0x08 // Control ID Code: Wait On Semaphore (Wait For Frame To Complete In Other Thread)
+static u8 bin_memory[2 * 1024 * 1024] __attribute__ ((aligned(16)));
+static u8 bin_base[48*(4096/32)*(4096/32)] __attribute__ ((aligned(16)));
 
-void v3d_init(void)
+void v3d_init(i32 width, i32 height)
 {
-    mbox[0] = 12*4;
-    mbox[1] = MBOX_REQUEST;
+    {
+        mbox[0] = 12*4;
+        mbox[1] = MBOX_REQUEST;
 
-    mbox[2] = MBOX_TAG_SET_CLOCK_RATE;
-    mbox[3] = 8;
-    mbox[4] = 8;
-    mbox[5] = CLK_V3D_ID;
-    mbox[6] = 250*1000*1000;
+        mbox[2] = MBOX_TAG_SET_CLOCK_RATE;
+        mbox[3] = 8;
+        mbox[4] = 8;
+        mbox[5] = CLK_V3D_ID;
+        mbox[6] = 250*1000*1000;
 
-    mbox[7] = MBOX_TAG_ENABLE_QPU;
-    mbox[8] = 4;
-    mbox[9] = 4;
-    mbox[10] = 1;
+        mbox[7] = MBOX_TAG_ENABLE_QPU;
+        mbox[8] = 4;
+        mbox[9] = 4;
+        mbox[10] = 1;
 
-    mbox[11] = MBOX_TAG_LAST;
+        mbox[11] = MBOX_TAG_LAST;
 
-    i32 ret = mbox_call(MBOX_CH_PROP);
-    assert(ret);
+        i32 ret = mbox_call(MBOX_CH_PROP);
+        assert(ret);
+    }
+
+    u8 command_buffer_storage[1024] = {0};
+
+    v3d_command_buffer_t cb = {0};
+
+    v3d_cb_init(&cb, command_buffer_storage, ARRAY_COUNT(command_buffer_storage));
+
+    v3d_cb_add_tile_binning_mode_configuration(
+            &cb,
+            (u32)(u64)bin_memory,
+            ARRAY_COUNT(bin_memory),
+            (u32)(u64)bin_base,
+            (width + 63) / 64,
+            (height + 63) / 64,
+            TILE_BINNING_FLAGS_AUTO_INITIALISE_TILE_STATE_DATA_ARRAY);
+
+
 }
 
 /*align 4
