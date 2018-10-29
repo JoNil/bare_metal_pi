@@ -3,11 +3,11 @@
 #include "mbox.h"
 #include "types.h"
 
-u32 width;
-u32 height;
-u32 pitch;
-u8 * framebuffer;
-u8 * current_buffer;
+static u32 width;
+static u32 height;
+static u32 pitch;
+static u8 * framebuffer;
+static u8 * current_buffer;
 
 void framebuffer_init(void)
 {
