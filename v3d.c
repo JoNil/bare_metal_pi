@@ -5,6 +5,9 @@
 #include "v3d.h"
 #include "v3d_cb.h"
 
+#define BUS_ADDRESSES_l2CACHE_ENABLED  0x40000000
+#define BUS_ADDRESSES_l2CACHE_DISABLED 0xC0000000 
+
 static u8 bin_memory[2 * 1024 * 1024] __attribute__ ((aligned(16)));
 static u8 bin_base[48*(4096/32)*(4096/32)] __attribute__ ((aligned(16)));
 
@@ -102,9 +105,9 @@ void v3d_init(i32 width, i32 height)
         shader_state.stride = 6 * 4;
         shader_state.fragment_shader_uniforms = 0;
         shader_state.fragment_shader_varyings = 3;
-        shader_state.fragment_shader_code_address = (u32)(u64)fragment_shader;
+        shader_state.fragment_shader_code_address = BUS_ADDRESSES_l2CACHE_DISABLED | (u32)(u64)fragment_shader;
         shader_state.fragment_shader_uniforms_address = 0;
-        shader_state.vertex_data_address = (u32)(u64)vertex_data;
+        shader_state.vertex_data_address = BUS_ADDRESSES_l2CACHE_DISABLED | (u32)(u64)vertex_data;
     }
 
     {
