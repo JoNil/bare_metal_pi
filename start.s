@@ -76,11 +76,11 @@ _start:
 5: mov sp, x1
 
     // Start L1 Cache
-    //mrs     x0, SCTLR_EL1 // X0 = System Control Register
-    //orr     x0, x0, #0x0004 // Data Cache (Bit 2)
-    //orr     x0, x0, #0x0800 // Branch Prediction (Bit 11)
-    //orr     x0, x0, #0x1000 // Instruction Caches (Bit 12)
-    //msr     SCTLR_EL1, x0 // System Control Register = X0
+    mrs     x0, SCTLR_EL1 // X0 = System Control Register
+    orr     x0, x0, #0x0004 // Data Cache (Bit 2)
+    orr     x0, x0, #0x0800 // Branch Prediction (Bit 11)
+    orr     x0, x0, #0x1000 // Instruction Caches (Bit 12)
+    msr     SCTLR_EL1, x0 // System Control Register = X0
    
     // clear bss
     ldr     x1, =__bss_start
