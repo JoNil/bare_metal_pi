@@ -107,6 +107,31 @@ void v3d_cb_tile_binning_mode_configuration(
         u8 height,
         u8 flags);
 
+#define TILE_RENDER_FLAGS_MULTISAMPLE_MODE_4X                        0x0001 // Multisample Mode (4X)
+#define TILE_RENDER_FLAGS_BUFFER_COLOR_DEPTH_64                      0x0002 // Tile Buffer 64-Bit Color Depth (HDR Mode)
+#define TILE_RENDER_FLAGS_FRAME_BUFFER_COLOR_FORMAT_BGR565_DITHERED  0x0000 // Non-HDR Frame Buffer Color Format = BGR565 Dithered
+#define TILE_RENDER_FLAGS_FRAME_BUFFER_COLOR_FORMAT_RGBA8888         0x0004 // Non-HDR Frame Buffer Color Format = RGBA8888
+#define TILE_RENDER_FLAGS_FRAME_BUFFER_COLOR_FORMAT_BGR565_NO_DITHER 0x0008 // Non-HDR Frame Buffer Color Format = BGR565 No Dither
+#define TILE_RENDER_FLAGS_DECIMATE_MODE_1X                           0x0000 // Decimate Mode = 1X
+#define TILE_RENDER_FLAGS_DECIMATE_MODE_4X                           0x0010 // Decimate Mode = 4X
+#define TILE_RENDER_FLAGS_DECIMATE_MODE_16X                          0x0020 // Decimate Mode = 16X
+#define TILE_RENDER_FLAGS_MEMORY_FORMAT_LINEAR                       0x0000 // Memory Format = Linear
+#define TILE_RENDER_FLAGS_MEMORY_FORMAT_T_FORMAT                     0x0040 // Memory Format = T-Format
+#define TILE_RENDER_FLAGS_MEMORY_FORMAT_LT_FORMAT                    0x0080 // Memory Format = LT-Format
+#define TILE_RENDER_FLAGS_ENABLE_VG_MASK_BUFFER                      0x0100 // Enable VG Mask Buffer
+#define TILE_RENDER_FLAGS_SELECT_COVERAGE_MODE                       0x0200 // Select Coverage Mode
+#define TILE_RENDER_FLAGS_EARLY_Z_UPDATE_DIRECTION_LT_LE             0x0000 // Early-Z Update Direction = LT/LE
+#define TILE_RENDER_FLAGS_EARLY_Z_UPDATE_DIRECTION_GT_GE             0x0400 // Early-Z Update Direction = GT/GE
+#define TILE_RENDER_FLAGS_EARLY_Z_EARLY_COV_DISABLE                  0x0800 // Early-Z/Early-Cov Disable
+#define TILE_RENDER_FLAGS_DOUBLE_BUFFER_IN_NON_MS_MODE               0x1000 // Double-Buffer In Non-MS Mode
+
+void v3d_cb_tile_rendering_mode_configuration (
+        v3d_command_builder_t * cb,
+        u32 address,
+        u16 width,
+        u16 height,
+        u16 flags);
+
 void v3d_cb_clear_colors (
         v3d_command_builder_t * cb,
         u64 clearcolor,  // Clear Color (2X RGBA8888 Or RGBA16161616)

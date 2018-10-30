@@ -1,4 +1,5 @@
 #include "assert.h"
+#include "framebuffer.h"
 #include "mbox.h"
 #include "types.h"
 #include "uart.h"
@@ -145,6 +146,9 @@ void v3d_init(i32 width, i32 height)
         v3d_cb_init(&cb, render_command_buffer, ARRAY_COUNT(render_command_buffer));
 
         v3d_cb_clear_colors(&cb, 0xFF00FFFFFF00FFFF, 0, 0, 0);
+
+        v3d_cb_tile_rendering_mode_configuration(
+                &cb, (u32)(u64)framebuffer_pointer(), (u16)width, (u16)height, TILE_RENDER_FLAGS_FRAME_BUFFER_COLOR_FORMAT_RGBA8888);
         
         v3d_cb_flush(&cb);
     }

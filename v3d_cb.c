@@ -5,20 +5,21 @@
 #include "uart.h"
 #include "v3d_cb.h"
 
-#define CMD_HALT                            0x00
-#define CMD_NO_OP                           0x01
-#define CMD_FLUSH                           0x04
-#define CMD_FLUSH_ALL_STATE                 0x05
-#define CMD_START_TILE_BINNING              0x06
-#define CMD_INCREMENT_SEMAPHORE             0x07
-#define CMD_WAIT_ON_SEMAPHORE               0x08
-#define CMD_VERTEX_ARRAY_PRIMITIVES         0x21
-#define CMD_NV_SHADER_STATE                 0x41
-#define CMD_CONFIGURATION_BITS              0x60
-#define CMD_CLIP_WINDOW                     0x66
-#define CMD_VIEWPORT_OFFSET                 0x67
-#define CMD_TILE_BINNING_MODE_CONFIGURATION 0x70
-#define CMD_CLEAR_COLORS                    0x72
+#define CMD_HALT                              0x00
+#define CMD_NO_OP                             0x01
+#define CMD_FLUSH                             0x04
+#define CMD_FLUSH_ALL_STATE                   0x05
+#define CMD_START_TILE_BINNING                0x06
+#define CMD_INCREMENT_SEMAPHORE               0x07
+#define CMD_WAIT_ON_SEMAPHORE                 0x08
+#define CMD_VERTEX_ARRAY_PRIMITIVES           0x21
+#define CMD_NV_SHADER_STATE                   0x41
+#define CMD_CONFIGURATION_BITS                0x60
+#define CMD_CLIP_WINDOW                       0x66
+#define CMD_VIEWPORT_OFFSET                   0x67
+#define CMD_TILE_BINNING_MODE_CONFIGURATION   0x70
+#define CMD_TILE_RENDERING_MODE_CONFIGURATION 0x71
+#define CMD_CLEAR_COLORS                      0x72
 
 static void v3d_cb_push_u8(v3d_command_builder_t * cb, u8 data)
 {
@@ -161,6 +162,20 @@ void v3d_cb_tile_binning_mode_configuration(
     v3d_cb_push_u8(cb, width);
     v3d_cb_push_u8(cb, height);
     v3d_cb_push_u8(cb, data);
+}
+
+void v3d_cb_tile_rendering_mode_configuration (
+        v3d_command_builder_t * cb,
+        u32 address,
+        u16 width,
+        u16 height,
+        u16 flags)
+{
+    v3d_cb_push_u8(cb, CMD_TILE_RENDERING_MODE_CONFIGURATION);
+    v3d_cb_push_u32(cb, address);
+    v3d_cb_push_u16(cb, width);
+    v3d_cb_push_u16(cb, height);
+    v3d_cb_push_u16(cb, flags);
 }
 
 void v3d_cb_clear_colors (

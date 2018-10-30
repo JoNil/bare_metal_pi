@@ -160,3 +160,8 @@ void framebuffer_swap()
     i32 ret = mbox_call(MBOX_CH_PROP);
     assert(ret);
 }
+
+u8 * framebuffer_pointer()
+{
+    return current_buffer;
+}
