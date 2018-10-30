@@ -18,6 +18,7 @@
 #define CMD_CLIP_WINDOW                     0x66
 #define CMD_VIEWPORT_OFFSET                 0x67
 #define CMD_TILE_BINNING_MODE_CONFIGURATION 0x70
+#define CMD_CLEAR_COLORS                    0x72
 
 static void v3d_cb_push_u8(v3d_command_builder_t * cb, u8 data)
 {
@@ -47,6 +48,13 @@ static void v3d_cb_push_u32(v3d_command_builder_t * cb, u32 data)
     assert(cb->cursor + 4 < cb->storage_size);
     memcpy(cb->storage + cb->cursor, &data, 4);
     cb->cursor += 4;
+}
+
+static void v3d_cb_push_u64(v3d_command_builder_t * cb, u64 data)
+{
+    assert(cb->cursor + 8 < cb->storage_size);
+    memcpy(cb->storage + cb->cursor, &data, 8);
+    cb->cursor += 8;
 }
 
 void v3d_cb_init(v3d_command_builder_t * cb, u8 * storage, u32 storage_size)
@@ -155,3 +163,16 @@ void v3d_cb_tile_binning_mode_configuration(
     v3d_cb_push_u8(cb, data);
 }
 
+void v3d_cb_clear_colors (
+        v3d_command_builder_t * cb,
+        u64 clearcolor,
+        u8 clearvgmask,
+        u32 clearzs,
+        u8 clearstencil)
+{
+    v3d_cb_push_u8(cb, CMD_CLEAR_COLORS);
+    v3d_cb_push_u64(cb, clearcolor);
+    v3d_cb_push_u32(cb, (clearvgmask * 0x1000000) + clearzs);
+    v3d_cb_push_u8(cb, clearstencil);
+
+}

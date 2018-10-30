@@ -1,3 +1,5 @@
+#pragma once
+
 #include "types.h"
 
 typedef struct v3d_command_builder_s {
@@ -104,3 +106,10 @@ void v3d_cb_tile_binning_mode_configuration(
         u8 width,
         u8 height,
         u8 flags);
+
+void v3d_cb_clear_colors (
+        v3d_command_builder_t * cb,
+        u64 clearcolor,  // Clear Color (2X RGBA8888 Or RGBA16161616)
+        u8 clearvgmask,
+        u32 clearzs,
+        u8 clearstencil);

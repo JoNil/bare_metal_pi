@@ -9,6 +9,7 @@ static u8 bin_memory[2 * 1024 * 1024] __attribute__ ((aligned(16)));
 static u8 bin_base[48*(4096/32)*(4096/32)] __attribute__ ((aligned(16)));
 
 static u8 binning_command_buffer[4096] __attribute__ ((aligned(16)));
+static u8 render_command_buffer[4096] __attribute__ ((aligned(16)));
 
 static nv_shader_state_t shader_state __attribute__ ((aligned(16)));
 
@@ -131,6 +132,16 @@ void v3d_init(i32 width, i32 height)
         
         v3d_cb_nv_shader_state(&cb, &shader_state);
         v3d_vertex_array_primitives(&cb, PRIMITIVE_MODE_TRIANGLES, 3, 0);
+        
+        v3d_cb_flush(&cb);
+    }
+
+    {
+        v3d_command_builder_t cb = {0};
+
+        v3d_cb_init(&cb, render_command_buffer, ARRAY_COUNT(render_command_buffer));
+
+        v3d_cb_clear_colors(&cb, 0xFF00FFFFFF00FFFF, 0, 0, 0);
         
         v3d_cb_flush(&cb);
     }

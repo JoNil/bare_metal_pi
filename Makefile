@@ -23,7 +23,7 @@ build_date:
 %.o: %.c
 	aarch64-none-elf-gcc $(CFLAGS) -c $< -o $@
 
-kernel8.img: start.o $(OBJS)
+kernel8.img: $(OBJS)
 	aarch64-none-elf-ld -nostdlib -nostartfiles $(OBJS) -T link.ld -o kernel8.elf
 	aarch64-none-elf-objdump kernel8.elf -D > kernel8.txt
 	aarch64-none-elf-objcopy -O binary kernel8.elf kernel8.img
