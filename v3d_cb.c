@@ -12,6 +12,9 @@
 #define CMD_START_TILE_BINNING                0x06
 #define CMD_INCREMENT_SEMAPHORE               0x07
 #define CMD_WAIT_ON_SEMAPHORE                 0x08
+#define CMD_BRANCH_TO_SUB_LIST                0x11
+#define CMD_STORE_MULTI_SAMPLE                0x18
+#define CMD_STORE_MULTI_SAMPLE_END            0x19
 #define CMD_VERTEX_ARRAY_PRIMITIVES           0x21
 #define CMD_NV_SHADER_STATE                   0x41
 #define CMD_CONFIGURATION_BITS                0x60
@@ -20,6 +23,8 @@
 #define CMD_TILE_BINNING_MODE_CONFIGURATION   0x70
 #define CMD_TILE_RENDERING_MODE_CONFIGURATION 0x71
 #define CMD_CLEAR_COLORS                      0x72
+#define CMD_TILE_COORDINATES                  0x72
+#define CMD_STORE_TILE_BUFFER_GENERAL         0x1C
 
 static void v3d_cb_push_u8(v3d_command_builder_t * cb, u8 data)
 {
@@ -100,6 +105,22 @@ void v3d_cb_wait_on_semaphore(v3d_command_builder_t * cb)
     v3d_cb_push_u8(cb, CMD_WAIT_ON_SEMAPHORE);
 }
 
+void v3d_cb_branch_to_sub_list(v3d_command_builder_t * cb, u32 address)
+{
+    v3d_cb_push_u8(cb, CMD_BRANCH_TO_SUB_LIST);
+    v3d_cb_push_u32(cb, address);
+}
+
+void v3d_cb_store_multi_sample(v3d_command_builder_t * cb)
+{
+    v3d_cb_push_u8(cb, CMD_STORE_MULTI_SAMPLE);
+}
+
+void v3d_cb_store_multi_sample_end(v3d_command_builder_t * cb)
+{
+    v3d_cb_push_u8(cb, CMD_STORE_MULTI_SAMPLE_END);
+}
+
 void v3d_vertex_array_primitives(v3d_command_builder_t * cb, u8 primitive_mode, u16 length, u16 index)
 {
     v3d_cb_push_u8(cb, CMD_VERTEX_ARRAY_PRIMITIVES);
@@ -164,7 +185,7 @@ void v3d_cb_tile_binning_mode_configuration(
     v3d_cb_push_u8(cb, data);
 }
 
-void v3d_cb_tile_rendering_mode_configuration (
+void v3d_cb_tile_rendering_mode_configuration(
         v3d_command_builder_t * cb,
         u32 address,
         u16 width,
@@ -178,7 +199,7 @@ void v3d_cb_tile_rendering_mode_configuration (
     v3d_cb_push_u16(cb, flags);
 }
 
-void v3d_cb_clear_colors (
+void v3d_cb_clear_colors(
         v3d_command_builder_t * cb,
         u64 clearcolor,
         u8 clearvgmask,
@@ -189,5 +210,25 @@ void v3d_cb_clear_colors (
     v3d_cb_push_u64(cb, clearcolor);
     v3d_cb_push_u32(cb, (clearvgmask * 0x1000000) + clearzs);
     v3d_cb_push_u8(cb, clearstencil);
+}
 
+void v3d_cb_tile_coordinates(
+        v3d_command_builder_t * cb,
+        u8 column,
+        u8 row)
+{
+    v3d_cb_push_u8(cb, CMD_CLEAR_COLORS);
+    v3d_cb_push_u8(cb, column);
+    v3d_cb_push_u8(cb, row);
+}
+
+void v3d_cb_store_tile_buffer_general(
+        v3d_command_builder_t * cb,
+        u16 flags16,
+        u32 flags32,
+        u32 address)
+{
+    v3d_cb_push_u8(cb, CMD_STORE_TILE_BUFFER_GENERAL);
+    v3d_cb_push_u16(cb, flags16);
+    v3d_cb_push_u32(cb, flags32 | address);
 }
