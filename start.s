@@ -73,7 +73,7 @@ _start:
     msr     elr_el2, x2
     eret
 
-5: mov sp, x1
+5:  mov sp, x1
 
     // Start L1 Cache
     mrs     x0, SCTLR_EL1 // X0 = System Control Register
@@ -82,7 +82,7 @@ _start:
     orr     x0, x0, #0x1000 // Instruction Caches (Bit 12)
     msr     SCTLR_EL1, x0 // System Control Register = X0
    
-    // clear bss
+    // Clear bss
     ldr     x1, =__bss_start
     ldr     w2, =__bss_size
 3:  cbz     w2, 4f
@@ -96,7 +96,7 @@ _start:
     // For failsafe, halt this core too
     b       1b
 
-    // important, code has to be properly aligned
+    // Important, code has to be properly aligned
     .align 11
 _vectors:
     // synchronous

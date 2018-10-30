@@ -18,15 +18,15 @@ build_date:
 	echo '#pragma once\n\n#define BUILD_DATE "${DATE}"' > build_date.h
 
 %.o: %.s
-	aarch64-linux-gnu-gcc $(CFLAGS) -c $< -o $@
+	aarch64-none-elf-gcc $(CFLAGS) -c $< -o $@
 
 %.o: %.c
-	aarch64-linux-gnu-gcc $(CFLAGS) -c $< -o $@
+	aarch64-none-elf-gcc $(CFLAGS) -c $< -o $@
 
 kernel8.img: start.o $(OBJS)
-	aarch64-linux-gnu-ld -nostdlib -nostartfiles $(OBJS) -T link.ld -o kernel8.elf
-	aarch64-linux-gnu-objdump kernel8.elf -D > kernel8.txt
-	aarch64-linux-gnu-objcopy -O binary kernel8.elf kernel8.img
+	aarch64-none-elf-ld -nostdlib -nostartfiles $(OBJS) -T link.ld -o kernel8.elf
+	aarch64-none-elf-objdump kernel8.elf -D > kernel8.txt
+	aarch64-none-elf-objcopy -O binary kernel8.elf kernel8.img
 
 clean:
 	rm kernel8.elf build_date.h *.o >/dev/null 2>/dev/null || true

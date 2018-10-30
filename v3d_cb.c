@@ -1,8 +1,9 @@
 #include "assert.h"
+#include "memcpy.h"
+#include "str.h"
 #include "types.h"
 #include "uart.h"
 #include "v3d_cb.h"
-#include "str.h"
 
 #define CMD_HALT                            0x00
 #define CMD_NO_OP                           0x01
@@ -28,56 +29,28 @@ static void v3d_cb_push_u8(v3d_command_builder_t * cb, u8 data)
 static void v3d_cb_push_u16(v3d_command_builder_t * cb, u16 data)
 {
     assert(cb->cursor + 2 < cb->storage_size);
-    *((u16 *)(cb->storage + cb->cursor)) = data;
+    memcpy(cb->storage + cb->cursor, &data, 2);
     cb->cursor += 2;
 }
 
 static void v3d_cb_push_u24(v3d_command_builder_t * cb, u32 data)
 {
+    u32 shiftedData = data >> 8;
+
     assert(cb->cursor + 3 < cb->storage_size);
-    u32 upper = *((u32 *)(cb->storage + cb->cursor - 1)) & 0xff;
-    *((u32 *)(cb->storage + cb->cursor - 1)) = upper | (data << 8);
+    memcpy(cb->storage + cb->cursor, &shiftedData, 3);
     cb->cursor += 3;
 }
 
 static void v3d_cb_push_u32(v3d_command_builder_t * cb, u32 data)
 {
-    uart_puts("aaaa\n");
-
     assert(cb->cursor + 4 < cb->storage_size);
-
-    uart_puts("cccc\n");
-
-    {
-        char buffer[128] = {};
-        i32_to_string(buffer, sizeof(buffer), (u32)(u64)cb->storage);
-
-        uart_puts(buffer);
-        uart_send('\n');
-    }
-
-    {
-        char buffer[128] = {};
-        i32_to_string(buffer, sizeof(buffer), (u32)(u64)cb->cursor);
-
-        uart_puts(buffer);
-        uart_send('\n');
-    }
-
-    *((u32 *)(cb->storage + cb->cursor)) = data;
-
-
-    uart_puts("dddd\n");
-
+    memcpy(cb->storage + cb->cursor, &data, 4);
     cb->cursor += 4;
-
-    uart_puts("bbbb\n");
 }
 
 void v3d_cb_init(v3d_command_builder_t * cb, u8 * storage, u32 storage_size)
 {
-    uart_puts("3.1\n");
-
     cb->storage = storage;
     cb->storage_size = storage_size;
     cb->cursor = 0;
@@ -105,7 +78,6 @@ void v3d_cb_flush_all_state(v3d_command_builder_t * cb)
 
 void v3d_cb_start_tile_binning(v3d_command_builder_t * cb)
 {
-    uart_puts("3.3\n");
     v3d_cb_push_u8(cb, CMD_START_TILE_BINNING);
 }
 
@@ -174,22 +146,12 @@ void v3d_cb_tile_binning_mode_configuration(
         u8 height,
         u8 data)
 {
-    uart_puts("3.2\n");
-
     v3d_cb_push_u8(cb, CMD_TILE_BINNING_MODE_CONFIGURATION);
-    uart_puts("1\n");
     v3d_cb_push_u32(cb, address);
-    uart_puts("2\n");
     v3d_cb_push_u32(cb, size);
-    uart_puts("3\n");
     v3d_cb_push_u32(cb, baseaddress);
-    uart_puts("4\n");
     v3d_cb_push_u8(cb, width);
-    uart_puts("5\n");
     v3d_cb_push_u8(cb, height);
-    uart_puts("6\n");
     v3d_cb_push_u8(cb, data);
-
-    uart_puts("3.2e\n");
 }
 

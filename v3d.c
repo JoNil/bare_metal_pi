@@ -75,8 +75,6 @@ static const u32 fragment_shader[] __attribute__ ((aligned(16))) = {
 
 void v3d_init(i32 width, i32 height)
 {
-    uart_puts("1\n");
-
     {
         mbox[0] = 12*4;
         mbox[1] = MBOX_REQUEST;
@@ -98,8 +96,6 @@ void v3d_init(i32 width, i32 height)
         assert(ret);
     }
 
-    uart_puts("2\n");
-
     {
         shader_state.flags = 0;
         shader_state.stride = 6 * 4;
@@ -109,8 +105,6 @@ void v3d_init(i32 width, i32 height)
         shader_state.fragment_shader_uniforms_address = 0;
         shader_state.vertex_data_address = (u32)(u64)vertex_data;
     }
-
-    uart_puts("3\n");
 
     {
         v3d_command_builder_t cb = {0};
@@ -140,5 +134,4 @@ void v3d_init(i32 width, i32 height)
         
         v3d_cb_flush(&cb);
     }
-    uart_puts("4\n");
 }
