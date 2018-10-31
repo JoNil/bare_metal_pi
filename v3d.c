@@ -133,12 +133,14 @@ void v3d_draw(i32 width, i32 height)
         v3d_cb_start_tile_binning(&cb);
 
         v3d_cb_clip_window(&cb, 0, 0, width, height);
-        v3d_cb_viewport_offset(&cb, 0, 0);
+        
         v3d_cb_configuration_bits(
                 &cb,
-                CONFIGURATION_BIT_ENABLE_FORWARD_FACING_PRIMITIVE |
-                CONFIGURATION_BIT_ENABLE_REVERSE_FACING_PRIMITIVE |
-                CONFIGURATION_BIT_EARLY_Z_UPDATES_ENABLE);
+                CONFIGURATION_BITS_FLAGS8_ENABLE_FORWARD_FACING_PRIMITIVE |
+                CONFIGURATION_BITS_FLAGS8_ENABLE_REVERSE_FACING_PRIMITIVE,
+                CONFIGURATION_BITS_FLAGS16_EARLY_Z_UPDATES_ENABLE);
+
+        v3d_cb_viewport_offset(&cb, 0, 0);
         
         v3d_cb_nv_shader_state(&cb, &shader_state);
         v3d_vertex_array_primitives(&cb, PRIMITIVE_MODE_TRIANGLES, 3, 0);
@@ -185,19 +187,49 @@ void v3d_draw(i32 width, i32 height)
         render_command_buffer_end = v3d_cb_end(&cb);
     }
 
+
     *(volatile u32 *)(V3D_BASE + V3D_CT0CA) = (u32)(u64)binning_command_buffer;
-    *(volatile u32 *)(V3D_BASE + V3D_CT0EA) = (u32)(u64)binning_command_buffer + binning_command_buffer_end - 1;
+    *(volatile u32 *)(V3D_BASE + V3D_CT0EA) = (u32)(u64)binning_command_buffer + binning_command_buffer_end;
 
     while (*(volatile u32 *)(V3D_BASE + V3D_BFC) != 1) {
         {
-            char buffer[128] = {};
-            i32_to_string(buffer, sizeof(buffer), *(volatile u32 *)(V3D_BASE + V3D_PCS));
-
-            uart_puts(buffer);
+            {
+                char buffer[128] = {};
+                i32_to_string(buffer, sizeof(buffer), ((*(volatile u32 *)(V3D_BASE + V3D_BFC)) & V3D_BFC_BMFCT));
+                uart_puts(buffer);
+            }
+            uart_send(' ');
+            {
+                char buffer[128] = {};
+                i32_to_string(buffer, sizeof(buffer), *(volatile u32 *)(V3D_BASE + V3D_PCS));
+                uart_puts(buffer);
+            }
             uart_send('\n');
         }
     }
 
+    *(volatile u32 *)(V3D_BASE + V3D_BFC) = 0;
+
+
     *(volatile u32 *)(V3D_BASE + V3D_CT1CA) = (u32)(u64)render_command_buffer;
     *(volatile u32 *)(V3D_BASE + V3D_CT1EA) = (u32)(u64)render_command_buffer + render_command_buffer_end;
+
+    while (((*(volatile u32 *)(V3D_BASE + V3D_BFC))) != 1) {
+        {
+            {
+                char buffer[128] = {};
+                i32_to_string(buffer, sizeof(buffer), *(volatile u32 *)(V3D_BASE + V3D_BFC));
+                uart_puts(buffer);
+            }
+            uart_send(' ');
+            {
+                char buffer[128] = {};
+                i32_to_string(buffer, sizeof(buffer), *(volatile u32 *)(V3D_BASE + V3D_PCS));
+                uart_puts(buffer);
+            }
+            uart_send('\n');
+        }
+    }
+
+    *(volatile u32 *)(V3D_BASE + V3D_BFC) = 0;
 }

@@ -33,8 +33,8 @@ void v3d_cb_store_multi_sample_end(v3d_command_builder_t * cb);
 void v3d_vertex_array_primitives(
         v3d_command_builder_t * cb,
         u8 primitive_mode,
-        u16 length, // Length (Number Of Vertices)
-        u16 index); // Index Of First Vertex
+        u32 length, // Length (Number Of Vertices)
+        u32 index); // Index Of First Vertex
 
 #define NV_SHADER_STATE_FLAG_FRAGMENT_SHADER_SINGLE_THREADED                        0x1
 #define NV_SHADER_STATE_FLAG_STRIDE_POINT_SIZE_INCLUDED_IN_SHADED_VERTEX_DATA       0x2
@@ -56,36 +56,40 @@ _Static_assert(_Alignof(nv_shader_state_t) == 16, "Error");
 
 void v3d_cb_nv_shader_state(v3d_command_builder_t * cb, nv_shader_state_t * nv_shader_state);
 
-#define CONFIGURATION_BIT_ENABLE_FORWARD_FACING_PRIMITIVE  0x000001 // Enable Forward Facing Primitive
-#define CONFIGURATION_BIT_ENABLE_REVERSE_FACING_PRIMITIVE  0x000002 // Enable Reverse Facing Primitive
-#define CONFIGURATION_BIT_CLOCKWISE_PRIMITIVES             0x000004 // Clockwise Primitives
-#define CONFIGURATION_BIT_ENABLE_DEPTH_OFFSET              0x000008 // Enable Depth Offset
-#define CONFIGURATION_BIT_ANTIALIASED_POINTS_LINES         0x000010 // Antialiased Points & Lines (Not Actually Supported)
-#define CONFIGURATION_BIT_COVERAGE_READ_TYPE_LEVEL_4_8     0x000000 // Coverage Read Type = 4*8-Bit Level
-#define CONFIGURATION_BIT_COVERAGE_READ_TYPE_MASK_16       0x000020 // Coverage Read Type = 16-Bit Mask
-#define CONFIGURATION_BIT_RASTERISER_OVERSAMPLE_MODE_NONE  0x000000 // Rasteriser Oversample Mode = None
-#define CONFIGURATION_BIT_RASTERISER_OVERSAMPLE_MODE_4X    0x000040 // Rasteriser Oversample Mode = 4X
-#define CONFIGURATION_BIT_RASTERISER_OVERSAMPLE_MODE_16X   0x000080 // Rasteriser Oversample Mode = 16X
-#define CONFIGURATION_BIT_COVERAGE_PIPE_SELECT             0x000100 // Coverage Pipe Select
-#define CONFIGURATION_BIT_COVERAGE_UPDATE_MODE_NON_ZERO    0x000000 // Coverage Update Mode = Non Zero
-#define CONFIGURATION_BIT_COVERAGE_UPDATE_MODE_ODD         0x000200 // Coverage Update Mode = Odd
-#define CONFIGURATION_BIT_COVERAGE_UPDATE_MODE_OR          0x000400 // Coverage Update Mode = OR
-#define CONFIGURATION_BIT_COVERAGE_UPDATE_MODE_ZERO        0x000600 // Coverage Update Mode = Zero
-#define CONFIGURATION_BIT_COVERAGE_READ_MODE_CLEAR_ON_READ 0x000000 // Coverage Read Mode = Clear On Read
-#define CONFIGURATION_BIT_COVERAGE_READ_MODE_LEAVE_ON_READ 0x000800 // Coverage Read Mode = Leave On Read
-#define CONFIGURATION_BIT_DEPTH_TEST_FUNCTION_NEVER        0x000000 // Depth-Test Function = Never
-#define CONFIGURATION_BIT_DEPTH_TEST_FUNCTION_LT           0x001000 // Depth-Test Function = Less Than (LT)
-#define CONFIGURATION_BIT_DEPTH_TEST_FUNCTION_EQ           0x002000 // Depth-Test Function = Equal (EQ)
-#define CONFIGURATION_BIT_DEPTH_TEST_FUNCTION_LE           0x003000 // Depth-Test Function = Less Equal (LE)
-#define CONFIGURATION_BIT_DEPTH_TEST_FUNCTION_GT           0x004000 // Depth-Test Function = Greater Than (GT)
-#define CONFIGURATION_BIT_DEPTH_TEST_FUNCTION_NE           0x005000 // Depth-Test Function = Not Equal (NE)
-#define CONFIGURATION_BIT_DEPTH_TEST_FUNCTION_GE           0x006000 // Depth-Test Function = Greater Equal (GE)
-#define CONFIGURATION_BIT_DEPTH_TEST_FUNCTION_ALWAYS       0x007000 // Depth-Test Function = Always
-#define CONFIGURATION_BIT_Z_UPDATES_ENABLE                 0x008000 // Z Updates Enable
-#define CONFIGURATION_BIT_EARLY_Z_ENABLE                   0x010000 // Early Z Enable
-#define CONFIGURATION_BIT_EARLY_Z_UPDATES_ENABLE           0x020000 // Early Z Updates Enable
+#define CONFIGURATION_BITS_FLAGS8_ENABLE_FORWARD_FACING_PRIMITIVE   0x01 // Enable Forward Facing Primitive
+#define CONFIGURATION_BITS_FLAGS8_ENABLE_REVERSE_FACING_PRIMITIVE   0x02 // Enable Reverse Facing Primitive
+#define CONFIGURATION_BITS_FLAGS8_CLOCKWISE_PRIMITIVES              0x04 // Clockwise Primitives
+#define CONFIGURATION_BITS_FLAGS8_ENABLE_DEPTH_OFFSET               0x08 // Enable Depth Offset
+#define CONFIGURATION_BITS_FLAGS8_ANTIALIASED_POINTS_LINES          0x10 // Antialiased Points & Lines (Not Actually Supported)
+#define CONFIGURATION_BITS_FLAGS8_COVERAGE_READ_TYPE_LEVEL_4_8      0x00 // Coverage Read Type = 4*8-Bit Level
+#define CONFIGURATION_BITS_FLAGS8_COVERAGE_READ_TYPE_MASK_16        0x20 // Coverage Read Type = 16-Bit Mask
+#define CONFIGURATION_BITS_FLAGS8_RASTERISER_OVERSAMPLE_MODE_NONE   0x00 // Rasteriser Oversample Mode = None
+#define CONFIGURATION_BITS_FLAGS8_RASTERISER_OVERSAMPLE_MODE_4X     0x40 // Rasteriser Oversample Mode = 4X
+#define CONFIGURATION_BITS_FLAGS8_RASTERISER_OVERSAMPLE_MODE_16X    0x80 // Rasteriser Oversample Mode = 16X
+#define CONFIGURATION_BITS_FLAGS16_COVERAGE_PIPE_SELECT             0x0001 // Coverage Pipe Select
+#define CONFIGURATION_BITS_FLAGS16_COVERAGE_UPDATE_MODE_NON_ZERO    0x0000 // Coverage Update Mode = Non Zero
+#define CONFIGURATION_BITS_FLAGS16_COVERAGE_UPDATE_MODE_ODD         0x0002 // Coverage Update Mode = Odd
+#define CONFIGURATION_BITS_FLAGS16_COVERAGE_UPDATE_MODE_OR          0x0004 // Coverage Update Mode = OR
+#define CONFIGURATION_BITS_FLAGS16_COVERAGE_UPDATE_MODE_ZERO        0x0006 // Coverage Update Mode = Zero
+#define CONFIGURATION_BITS_FLAGS16_COVERAGE_READ_MODE_CLEAR_ON_READ 0x0000 // Coverage Read Mode = Clear On Read
+#define CONFIGURATION_BITS_FLAGS16_COVERAGE_READ_MODE_LEAVE_ON_READ 0x0008 // Coverage Read Mode = Leave On Read
+#define CONFIGURATION_BITS_FLAGS16_DEPTH_TEST_FUNCTION_NEVER        0x0000 // Depth-Test Function = Never
+#define CONFIGURATION_BITS_FLAGS16_DEPTH_TEST_FUNCTION_LT           0x0010 // Depth-Test Function = Less Than (LT)
+#define CONFIGURATION_BITS_FLAGS16_DEPTH_TEST_FUNCTION_EQ           0x0020 // Depth-Test Function = Equal (EQ)
+#define CONFIGURATION_BITS_FLAGS16_DEPTH_TEST_FUNCTION_LE           0x0030 // Depth-Test Function = Less Equal (LE)
+#define CONFIGURATION_BITS_FLAGS16_DEPTH_TEST_FUNCTION_GT           0x0040 // Depth-Test Function = Greater Than (GT)
+#define CONFIGURATION_BITS_FLAGS16_DEPTH_TEST_FUNCTION_NE           0x0050 // Depth-Test Function = Not Equal (NE)
+#define CONFIGURATION_BITS_FLAGS16_DEPTH_TEST_FUNCTION_GE           0x0060 // Depth-Test Function = Greater Equal (GE)
+#define CONFIGURATION_BITS_FLAGS16_DEPTH_TEST_FUNCTION_ALWAYS       0x0070 // Depth-Test Function = Always
+#define CONFIGURATION_BITS_FLAGS16_Z_UPDATES_ENABLE                 0x0080 // Z Updates Enable
+#define CONFIGURATION_BITS_FLAGS16_EARLY_Z_ENABLE                   0x0100 // Early Z Enable
+#define CONFIGURATION_BITS_FLAGS16_EARLY_Z_UPDATES_ENABLE           0x0200 // Early Z Updates Enable
 
-void v3d_cb_configuration_bits(v3d_command_builder_t * cb, u32 flags);
+void v3d_cb_configuration_bits(
+        v3d_command_builder_t * cb,
+        u8 flags8,
+        u16 flags16);
+
 void v3d_cb_viewport_offset(v3d_command_builder_t * cb, u16 x, u16 y);
 void v3d_cb_clip_window(v3d_command_builder_t * cb, u16 left, u16 bottom, u16 width, u16 height);
 

@@ -166,29 +166,29 @@
 // V3D Control List Executor Registers (Per Thread)
 
 // V3D_CTnCS: V3D Control List Executor Thread n Control & Status Register Description
-#define V3D_CTnCS_CTMODE 0x00000001 // Control Thread Mode (Binning Mode Thread Only) READ
-#define V3D_CTnCS_CTERR  0x00000008 // Control Thread Error (Set When Stopped With An Error, Cleared On Restarting) READ
-#define V3D_CTnCS_CTSUBS 0x00000010 // Control Thread Sub-Mode READ/WRITE
-#define V3D_CTnCS_CTRUN  0x00000020 // Control Thread Run READ/WRITE
-#define V3D_CTnCS_CTRTSD 0x00000300 // Return Stack Depth (Number Of Levels Of List Nesting) READ
-#define V3D_CTnCS_CTSEMA 0x00007000 // Counting Semaphore (Current State Of The Counting Semaphore For This Thread) READ
-#define V3D_CTnCS_CTRSTA 0x00008000 // Reset Bit (Writing 1 Stops The Control Thread & Resets All Bits In This Register) WRITE
+#define V3D_CTNCS_CTMODE 0x00000001 // Control Thread Mode (Binning Mode Thread Only) READ
+#define V3D_CTNCS_CTERR  0x00000008 // Control Thread Error (Set When Stopped With An Error, Cleared On Restarting) READ
+#define V3D_CTNCS_CTSUBS 0x00000010 // Control Thread Sub-Mode READ/WRITE
+#define V3D_CTNCS_CTRUN  0x00000020 // Control Thread Run READ/WRITE
+#define V3D_CTNCS_CTRTSD 0x00000300 // Return Stack Depth (Number Of Levels Of List Nesting) READ
+#define V3D_CTNCS_CTSEMA 0x00007000 // Counting Semaphore (Current State Of The Counting Semaphore For This Thread) READ
+#define V3D_CTNCS_CTRSTA 0x00008000 // Reset Bit (Writing 1 Stops The Control Thread & Resets All Bits In This Register) WRITE
 
 // V3D_CTnEA: V3D Control List Executor Thread n End Address Register Description
-#define V3D_CTnEA_CTLEA 0xFFFFFFFF // Control List End Address (Set To The Byte Address After The Last Record In The Control List) READ/WRITE
+#define V3D_CTNEA_CTLEA 0xFFFFFFFF // Control List End Address (Set To The Byte Address After The Last Record In The Control List) READ/WRITE
 
 // V3D_CTnCA: V3D Control List Executor Thread n Current Address Register Description
-#define V3D_CTnCA_CTLCA 0xFFFFFFFF // Control List Current Address (Points To The Address Of The Current Record In The Control List) READ/WRITE
+#define V3D_CTNCA_CTLCA 0xFFFFFFFF // Control List Current Address (Points To The Address Of The Current Record In The Control List) READ/WRITE
 
 // V3D_CTnRA0: V3D Control List Executor Thread n Return Address Register Description
-#define V3D_CTnRA0_CTLRA 0xFFFFFFFF // Control List Return Address 0 (Address On Return Address Stack) READ
+#define V3D_CTNRA0_CTLRA 0xFFFFFFFF // Control List Return Address 0 (Address On Return Address Stack) READ
 
 // V3D_CTnLC: V3D Control List Executor Thread n List Counter Register Description
-#define V3D_CTnLC_CTLSLCS 0x0000FFFF // Sub-list Counter (Count Of Return Commands Encountered) READ/WRITE
-#define V3D_CTnLC_CTLLCM  0xFFFF0000 // Major List Counter (Count Of Flush Commands Encountered) READ/WRITE
+#define V3D_CTNLC_CTLSLCS 0x0000FFFF // Sub-list Counter (Count Of Return Commands Encountered) READ/WRITE
+#define V3D_CTNLC_CTLLCM  0xFFFF0000 // Major List Counter (Count Of Flush Commands Encountered) READ/WRITE
 
 // V3D_CTnPC: V3D Control List Executor Thread n Primitive List Counter Register Description
-#define V3D_CTnPC_CTLPC 0xFFFFFFFF // Primitive List Counter (Count Of Primitives Remaining Whilst Processing A Primitive List) READ
+#define V3D_CTNPC_CTLPC 0xFFFFFFFF // Primitive List Counter (Count Of Primitives Remaining Whilst Processing A Primitive List) READ
 
 
 // V3D Pipeline Registers

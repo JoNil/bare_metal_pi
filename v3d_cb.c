@@ -40,15 +40,6 @@ static void v3d_cb_push_u16(v3d_command_builder_t * cb, u16 data)
     cb->cursor += 2;
 }
 
-static void v3d_cb_push_u24(v3d_command_builder_t * cb, u32 data)
-{
-    u32 shiftedData = data >> 8;
-
-    assert(cb->cursor + 3 < cb->storage_size);
-    memcpy(cb->storage + cb->cursor, &shiftedData, 3);
-    cb->cursor += 3;
-}
-
 static void v3d_cb_push_u32(v3d_command_builder_t * cb, u32 data)
 {
     assert(cb->cursor + 4 < cb->storage_size);
@@ -126,12 +117,12 @@ void v3d_cb_store_multi_sample_end(v3d_command_builder_t * cb)
     v3d_cb_push_u8(cb, CMD_STORE_MULTI_SAMPLE_END);
 }
 
-void v3d_vertex_array_primitives(v3d_command_builder_t * cb, u8 primitive_mode, u16 length, u16 index)
+void v3d_vertex_array_primitives(v3d_command_builder_t * cb, u8 primitive_mode, u32 length, u32 index)
 {
     v3d_cb_push_u8(cb, CMD_VERTEX_ARRAY_PRIMITIVES);
     v3d_cb_push_u8(cb, primitive_mode);
-    v3d_cb_push_u16(cb, length);
-    v3d_cb_push_u16(cb, index);
+    v3d_cb_push_u32(cb, length);
+    v3d_cb_push_u32(cb, index);
 }
 
 void v3d_cb_nv_shader_state(v3d_command_builder_t * cb, nv_shader_state_t * nv_shader_state)
@@ -142,10 +133,12 @@ void v3d_cb_nv_shader_state(v3d_command_builder_t * cb, nv_shader_state_t * nv_s
 
 void v3d_cb_configuration_bits(
         v3d_command_builder_t * cb,
-        u32 flags)
+        u8 flags8,
+        u16 flags16)
 {
     v3d_cb_push_u8(cb, CMD_CONFIGURATION_BITS);
-    v3d_cb_push_u24(cb, flags);
+    v3d_cb_push_u8(cb, flags8);
+    v3d_cb_push_u16(cb, flags16);
 }
 
 void v3d_cb_clip_window(

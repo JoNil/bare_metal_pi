@@ -1,3 +1,4 @@
+#include "assert.h"
 #include "build_date.h"
 #include "framebuffer.h"
 #include "mmu.h"
