@@ -78,29 +78,30 @@ static const u32 fragment_shader[] __attribute__ ((aligned(16))) = {
     0x500009E7, // nop; nop; sbdone
 };
 
-void v3d_init(i32 width, i32 height)
+void v3d_init(void)
 {
-    {
-        mbox[0] = 12*4;
-        mbox[1] = MBOX_REQUEST;
+    mbox[0] = 12*4;
+    mbox[1] = MBOX_REQUEST;
 
-        mbox[2] = MBOX_TAG_SET_CLOCK_RATE;
-        mbox[3] = 8;
-        mbox[4] = 8;
-        mbox[5] = CLK_V3D_ID;
-        mbox[6] = 250*1000*1000;
+    mbox[2] = MBOX_TAG_SET_CLOCK_RATE;
+    mbox[3] = 8;
+    mbox[4] = 8;
+    mbox[5] = CLK_V3D_ID;
+    mbox[6] = 250*1000*1000;
 
-        mbox[7] = MBOX_TAG_ENABLE_QPU;
-        mbox[8] = 4;
-        mbox[9] = 4;
-        mbox[10] = 1;
+    mbox[7] = MBOX_TAG_ENABLE_QPU;
+    mbox[8] = 4;
+    mbox[9] = 4;
+    mbox[10] = 1;
 
-        mbox[11] = MBOX_TAG_LAST;
+    mbox[11] = MBOX_TAG_LAST;
 
-        i32 ret = mbox_call(MBOX_CH_PROP);
-        assert(ret);
-    }
+    i32 ret = mbox_call(MBOX_CH_PROP);
+    assert(ret);
+}
 
+void v3d_draw(i32 width, i32 height)
+{
     {
         shader_state.flags = 0;
         shader_state.stride = 6 * 4;
@@ -149,7 +150,45 @@ void v3d_init(i32 width, i32 height)
 
         v3d_cb_tile_rendering_mode_configuration(
                 &cb, (u32)(u64)framebuffer_pointer(), (u16)width, (u16)height, TILE_RENDER_FLAGS_FRAME_BUFFER_COLOR_FORMAT_RGBA8888);
-        
-        v3d_cb_flush(&cb);
+
+        v3d_cb_tile_coordinates(&cb, 0, 0);
+        v3d_cb_store_tile_buffer_general(&cb, 0, 0, 0);
+
+        i32 column_count = (width + 63) / 64;
+        i32 row_count = (height + 63) / 64;
+
+        for (i32 x = 0; x < column_count; ++x) {
+
+            for (i32 y = 0; y < row_count; ++y) {
+
+                if (x == column_count - 1 && y == row_count - 1) {
+                    v3d_cb_tile_coordinates(&cb, x, y);
+                    v3d_cb_branch_to_sub_list(&cb, (u32)(u64)bin_memory + ((y * column_count + x) * 32));
+                    v3d_cb_store_multi_sample_end(&cb);
+                } else {
+                    v3d_cb_tile_coordinates(&cb, x, y);
+                    v3d_cb_branch_to_sub_list(&cb, (u32)(u64)bin_memory + ((y * column_count + x) * 32));
+                    v3d_cb_store_multi_sample(&cb);
+                }
+            }
+        }
     }
+
+    // ; Run Binning Control List (Thread 0)
+    // mov w0,PERIPHERAL_BASE + V3D_BASE ; Load V3D Base Address
+    // adr x1,CONTROL_LIST_BIN_STRUCT ; Store Control List Executor Binning Thread 0 Current Address
+    // str w1,[x0,V3D_CT0CA]
+    // adr x1,CONTROL_LIST_BIN_END ; Store Control List Executor Binning Thread 0 End Address
+    // str w1,[x0,V3D_CT0EA] ; When End Address Is Stored Control List Thread Executes
+
+    // WaitBinControlList: ; Wait For Control List To Execute
+    // ldr w1,[x0,V3D_BFC] ; Load Flush Count
+    // tst w1,1 ; Test IF PTB Has Flushed All Tile Lists To Memory
+    // b.eq WaitBinControlList
+
+    // ; Run Rendering Control List (Thread 1)
+    // adr x1,CONTROL_LIST_RENDER_STRUCT ; Store Control List Executor Rendering Thread 1 Current Address
+    // str w1,[x0,V3D_CT1CA]
+    // adr x1,CONTROL_LIST_RENDER_END ; Store Control List Executor Rendering Thread 1 End Address
+    // str w1,[x0,V3D_CT1EA] ; When End Address Is Stored Control List Thread Executes
 }

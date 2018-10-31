@@ -22,7 +22,7 @@ void main()
 
     uart_puts("Framebuffer inited\n");
 
-    v3d_init(1280, 720);
+    v3d_init();
 
     uart_puts("V3d inited\n");
 
@@ -60,7 +60,9 @@ void main()
             y = 100;
         }
 
-        framebuffer_clear();
+        //framebuffer_clear();
+
+        v3d_draw(1280, 720);
 
         framebuffer_draw(x, y);
 
