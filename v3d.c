@@ -2,6 +2,7 @@
 #include "framebuffer.h"
 #include "gpio.h"
 #include "mbox.h"
+#include "snprintf.h"
 #include "str.h"
 #include "types.h"
 #include "uart.h"
@@ -186,6 +187,20 @@ void v3d_draw(i32 width, i32 height)
 
         render_command_buffer_end = v3d_cb_end(&cb);
     }
+
+    uart_puts("1\n");
+
+    for (i32 i = 0; i < render_command_buffer_end; ++i) {
+        char buffer[128] = {};
+        uart_puts("1.1\n");
+        snprintf(buffer, sizeof(buffer), "hej %d\n", 1);
+        uart_puts("1.2\n");
+        uart_puts(buffer);
+    }
+
+    uart_puts("2\n");
+
+    abort();
 
 
     *(volatile u32 *)(V3D_BASE + V3D_CT0CA) = (u32)(u64)binning_command_buffer;

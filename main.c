@@ -61,6 +61,8 @@ void main()
             y = 100;
         }
 
+        //__builtin_mempcpy();
+
         //framebuffer_clear();
 
         v3d_draw(1280, 720);
