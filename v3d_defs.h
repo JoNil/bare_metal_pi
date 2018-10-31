@@ -3,7 +3,7 @@
 // Raspberry Pi VideoCoreIV
 
 // V3D Register Address Map
-#define V3D_BASE   0xC00000 // Address ($20C00000 PHYSICAL, $7EC00000 BUS)
+#define V3D_BASE 0x3FC00000 // Address ($20C00000 PHYSICAL, $7EC00000 BUS)
 #define V3D_IDENT0  0x00000 // 0 (V3D Block Identity)
 #define V3D_IDENT1  0x00004 // 1 (V3D Configuration A)
 #define V3D_IDENT2  0x00008 // 2 (V3D Configuration B)

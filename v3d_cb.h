@@ -9,6 +9,7 @@ typedef struct v3d_command_builder_s {
 } v3d_command_builder_t;
 
 void v3d_cb_init(v3d_command_builder_t * cb, u8 * storage, u32 storage_size);
+u32 v3d_cb_end(v3d_command_builder_t * cb);
 
 void v3d_cb_halt(v3d_command_builder_t * cb);                
 void v3d_cb_no_op(v3d_command_builder_t * cb);

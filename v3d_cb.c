@@ -70,6 +70,11 @@ void v3d_cb_init(v3d_command_builder_t * cb, u8 * storage, u32 storage_size)
     cb->cursor = 0;
 }
 
+u32 v3d_cb_end(v3d_command_builder_t * cb)
+{
+    return cb->cursor;
+}
+
 void v3d_cb_halt(v3d_command_builder_t * cb)
 {
     v3d_cb_push_u8(cb, CMD_HALT);

@@ -6,6 +6,7 @@
 #include "uart.h"
 #include "v3d.h"
 #include "v3d_cb.h"
+#include "v3d_defs.h"
 
 #define BUS_ADDRESSES_l2CACHE_ENABLED  0x40000000
 #define BUS_ADDRESSES_l2CACHE_DISABLED 0xC0000000 
@@ -113,6 +114,8 @@ void v3d_draw(i32 width, i32 height)
         shader_state.vertex_data_address = BUS_ADDRESSES_l2CACHE_DISABLED | (u32)(u64)vertex_data;
     }
 
+    u32 binning_command_buffer_end = 0;
+
     {
         v3d_command_builder_t cb = {0};
 
@@ -140,7 +143,11 @@ void v3d_draw(i32 width, i32 height)
         v3d_vertex_array_primitives(&cb, PRIMITIVE_MODE_TRIANGLES, 3, 0);
         
         v3d_cb_flush(&cb);
+
+        binning_command_buffer_end = v3d_cb_end(&cb);
     }
+
+    u32 render_command_buffer_end = 0;
 
     {
         v3d_command_builder_t cb = {0};
@@ -173,23 +180,19 @@ void v3d_draw(i32 width, i32 height)
                 }
             }
         }
+
+        render_command_buffer_end = v3d_cb_end(&cb);
     }
 
-    // ; Run Binning Control List (Thread 0)
-    // mov w0,PERIPHERAL_BASE + V3D_BASE ; Load V3D Base Address
-    // adr x1,CONTROL_LIST_BIN_STRUCT ; Store Control List Executor Binning Thread 0 Current Address
-    // str w1,[x0,V3D_CT0CA]
-    // adr x1,CONTROL_LIST_BIN_END ; Store Control List Executor Binning Thread 0 End Address
-    // str w1,[x0,V3D_CT0EA] ; When End Address Is Stored Control List Thread Executes
+    volatile u32 * v3d = (volatile u32 *)(u64)V3D_BASE;
 
-    // WaitBinControlList: ; Wait For Control List To Execute
-    // ldr w1,[x0,V3D_BFC] ; Load Flush Count
-    // tst w1,1 ; Test IF PTB Has Flushed All Tile Lists To Memory
-    // b.eq WaitBinControlList
+    *(v3d + V3D_CT0CA) = (u32)(u64)binning_command_buffer;
+    *(v3d + V3D_CT0EA) = (u32)(u64)binning_command_buffer + binning_command_buffer_end;
 
-    // ; Run Rendering Control List (Thread 1)
-    // adr x1,CONTROL_LIST_RENDER_STRUCT ; Store Control List Executor Rendering Thread 1 Current Address
-    // str w1,[x0,V3D_CT1CA]
-    // adr x1,CONTROL_LIST_RENDER_END ; Store Control List Executor Rendering Thread 1 End Address
-    // str w1,[x0,V3D_CT1EA] ; When End Address Is Stored Control List Thread Executes
+    while (*(v3d + V3D_BFC) != 1) {
+        ;
+    }
+
+    *(v3d + V3D_CT1CA) = (u32)(u64)render_command_buffer;
+    *(v3d + V3D_CT1EA) = (u32)(u64)render_command_buffer + render_command_buffer_end;
 }
