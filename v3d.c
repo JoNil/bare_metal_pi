@@ -1,5 +1,6 @@
 #include "assert.h"
 #include "framebuffer.h"
+#include "gpio.h"
 #include "mbox.h"
 #include "types.h"
 #include "uart.h"
