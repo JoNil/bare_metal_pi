@@ -2,6 +2,7 @@
 #include "framebuffer.h"
 #include "gpio.h"
 #include "mbox.h"
+#include "str.h"
 #include "types.h"
 #include "uart.h"
 #include "v3d.h"
@@ -184,15 +185,19 @@ void v3d_draw(i32 width, i32 height)
         render_command_buffer_end = v3d_cb_end(&cb);
     }
 
-    volatile u32 * v3d = (volatile u32 *)(u64)V3D_BASE;
+    *(volatile u32 *)(V3D_BASE + V3D_CT0CA) = (u32)(u64)binning_command_buffer;
+    *(volatile u32 *)(V3D_BASE + V3D_CT0EA) = (u32)(u64)binning_command_buffer + binning_command_buffer_end - 1;
 
-    *(v3d + V3D_CT0CA) = (u32)(u64)binning_command_buffer;
-    *(v3d + V3D_CT0EA) = (u32)(u64)binning_command_buffer + binning_command_buffer_end;
+    while (*(volatile u32 *)(V3D_BASE + V3D_BFC) != 1) {
+        {
+            char buffer[128] = {};
+            i32_to_string(buffer, sizeof(buffer), *(volatile u32 *)(V3D_BASE + V3D_PCS));
 
-    while (*(v3d + V3D_BFC) != 1) {
-        ;
+            uart_puts(buffer);
+            uart_send('\n');
+        }
     }
 
-    *(v3d + V3D_CT1CA) = (u32)(u64)render_command_buffer;
-    *(v3d + V3D_CT1EA) = (u32)(u64)render_command_buffer + render_command_buffer_end;
+    *(volatile u32 *)(V3D_BASE + V3D_CT1CA) = (u32)(u64)render_command_buffer;
+    *(volatile u32 *)(V3D_BASE + V3D_CT1EA) = (u32)(u64)render_command_buffer + render_command_buffer_end;
 }
