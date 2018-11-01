@@ -2,7 +2,7 @@
 #include "mbox.h"
 #include "types.h"
 
-volatile unsigned int  __attribute__((aligned(16))) mbox[MBOX_BUFFER_SIZE];
+volatile u32 mbox[MBOX_BUFFER_SIZE] __attribute__((aligned(16)));
 
 #define VIDEOCORE_MBOX  (MMIO_BASE + 0x0000B880)
 #define MBOX_READ       ((volatile u32 *)(VIDEOCORE_MBOX + 0x0))

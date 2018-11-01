@@ -43,17 +43,17 @@ void exc_handler(unsigned long type, unsigned long esr, unsigned long elr, unsig
     }
     // Dump registers
     uart_puts(":\n  ESR_EL1 ");
-    uart_hex(esr >> 32);
-    uart_hex(esr);
+    uart_hex_u32(esr >> 32);
+    uart_hex_u32(esr);
     uart_puts(" ELR_EL1 ");
-    uart_hex(elr >> 32);
-    uart_hex(elr);
+    uart_hex_u32(elr >> 32);
+    uart_hex_u32(elr);
     uart_puts("\n SPSR_EL1 ");
-    uart_hex(spsr >> 32);
-    uart_hex(spsr);
+    uart_hex_u32(spsr >> 32);
+    uart_hex_u32(spsr);
     uart_puts(" FAR_EL1 ");
-    uart_hex(far >> 32);
-    uart_hex(far);
+    uart_hex_u32(far >> 32);
+    uart_hex_u32(far);
     uart_puts("\n");
     
     // No return from exception for now

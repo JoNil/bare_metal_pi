@@ -1,17 +1,20 @@
 #include "gpio.h"
 #include "mbox.h"
+#include "str.h"
+#include "types.h"
+#include "uart.h"
 
 // PL011 UART registers
-#define UART0_DR        ((volatile unsigned int *)(MMIO_BASE + 0x00201000))
-#define UART0_FR        ((volatile unsigned int *)(MMIO_BASE + 0x00201018))
-#define UART0_IBRD      ((volatile unsigned int *)(MMIO_BASE + 0x00201024))
-#define UART0_FBRD      ((volatile unsigned int *)(MMIO_BASE + 0x00201028))
-#define UART0_LCRH      ((volatile unsigned int *)(MMIO_BASE + 0x0020102C))
-#define UART0_CR        ((volatile unsigned int *)(MMIO_BASE + 0x00201030))
-#define UART0_IMSC      ((volatile unsigned int *)(MMIO_BASE + 0x00201038))
-#define UART0_ICR       ((volatile unsigned int *)(MMIO_BASE + 0x00201044))
+#define UART0_DR        ((volatile u32 *)(MMIO_BASE + 0x00201000))
+#define UART0_FR        ((volatile u32 *)(MMIO_BASE + 0x00201018))
+#define UART0_IBRD      ((volatile u32 *)(MMIO_BASE + 0x00201024))
+#define UART0_FBRD      ((volatile u32 *)(MMIO_BASE + 0x00201028))
+#define UART0_LCRH      ((volatile u32 *)(MMIO_BASE + 0x0020102C))
+#define UART0_CR        ((volatile u32 *)(MMIO_BASE + 0x00201030))
+#define UART0_IMSC      ((volatile u32 *)(MMIO_BASE + 0x00201038))
+#define UART0_ICR       ((volatile u32 *)(MMIO_BASE + 0x00201044))
 
-void uart_init()
+void uart_init(void)
 {
     // Set baud rate and characteristics (115200 8N1) and map to GPIO
 
@@ -51,35 +54,62 @@ void uart_init()
     *UART0_CR = 0x301;     // enable Tx, Rx, FIFO
 }
 
-void uart_send(unsigned int c)
-{
-    do { asm volatile("nop"); } while (*UART0_FR & 0x20);
-    
-    *UART0_DR = c;
-}
-
-char uart_getc()
+char uart_getc(void)
 {
     do { asm volatile("nop"); } while (*UART0_FR & 0x10);
 
     return (char)(*UART0_DR);
 }
 
+void uart_putc(unsigned int c)
+{
+    do { asm volatile("nop"); } while (*UART0_FR & 0x20);
+    
+    *UART0_DR = c;
+}
+
 void uart_puts(const char * s)
 {
     while (*s) {
-        uart_send(*s++);
+        uart_putc(*s++);
     }
 }
 
-void uart_hex(unsigned int d) {
+void uart_buffer(u8 * data, i32 size)
+{
+    for (i32 i = 0; i < size; ++i) {
+        uart_hex_u8(data[i]);
+        uart_putc(' ');
+    }
+
+    uart_putc('\n');
+}
+
+void uart_hex_u32(u32 d) {
     unsigned int n = 0;
     for (int c = 28; c >= 0; c -= 4) {
         // Get highest tetrad
         n = (d >> c) & 0xF;
-
         // 0-9 => '0'-'9', 10-15 => 'A'-'F'
         n += n > 9 ? 0x37 : 0x30;
-        uart_send(n);
+        uart_putc(n);
     }
 }
+
+void uart_hex_u8(u8 d) {
+    unsigned int n = 0;
+    for (int c = 4; c >= 0; c -= 4) {
+        // Get highest tetrad
+        n = (d >> c) & 0xF;
+        // 0-9 => '0'-'9', 10-15 => 'A'-'F'
+        n += n > 9 ? 0x37 : 0x30;
+        uart_putc(n);
+    }
+}
+
+void uart_i32(i32 d) {
+    char buffer[32] = {};
+    i32_to_string(buffer, sizeof(buffer), d);
+    uart_puts(buffer);
+}
+

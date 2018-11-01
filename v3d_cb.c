@@ -23,7 +23,7 @@
 #define CMD_TILE_BINNING_MODE_CONFIGURATION   0x70
 #define CMD_TILE_RENDERING_MODE_CONFIGURATION 0x71
 #define CMD_CLEAR_COLORS                      0x72
-#define CMD_TILE_COORDINATES                  0x72
+#define CMD_TILE_COORDINATES                  0x73
 #define CMD_STORE_TILE_BUFFER_GENERAL         0x1C
 
 static void v3d_cb_push_u8(v3d_command_builder_t * cb, u8 data)
@@ -215,7 +215,7 @@ void v3d_cb_tile_coordinates(
         u8 column,
         u8 row)
 {
-    v3d_cb_push_u8(cb, CMD_CLEAR_COLORS);
+    v3d_cb_push_u8(cb, CMD_TILE_COORDINATES);
     v3d_cb_push_u8(cb, column);
     v3d_cb_push_u8(cb, row);
 }

@@ -119,7 +119,7 @@ void v3d_draw(i32 width, i32 height)
     u32 binning_command_buffer_end = 0;
 
     {
-        v3d_command_builder_t cb = {0};
+        v3d_command_builder_t cb = {};
 
         v3d_cb_init(&cb, binning_command_buffer, ARRAY_COUNT(binning_command_buffer));
 
@@ -154,7 +154,7 @@ void v3d_draw(i32 width, i32 height)
     u32 render_command_buffer_end = 0;
 
     {
-        v3d_command_builder_t cb = {0};
+        v3d_command_builder_t cb = {};
 
         v3d_cb_init(&cb, render_command_buffer, ARRAY_COUNT(render_command_buffer));
 
@@ -188,6 +188,25 @@ void v3d_draw(i32 width, i32 height)
         render_command_buffer_end = v3d_cb_end(&cb);
     }
 
+    uart_i32(render_command_buffer[0]);
+    uart_putc(' ');
+    uart_i32(render_command_buffer[1]);
+    uart_putc(' ');
+    uart_i32(render_command_buffer[2]);
+    uart_putc(' ');
+    uart_i32(render_command_buffer_end);
+    uart_putc('\n');
+
+    for (i32 i = 0; i < render_command_buffer_end; ++i) {
+        uart_i32(render_command_buffer[i]);
+        uart_putc(' ');
+    }
+
+    uart_putc('\n');
+    uart_putc('\n');
+
+    uart_buffer(render_command_buffer, render_command_buffer_end);
+
     /*uart_puts("1\n");
 
     for (i32 i = 0; i < render_command_buffer_end; ++i) {
@@ -198,29 +217,20 @@ void v3d_draw(i32 width, i32 height)
         uart_puts(buffer);
     }
 
-    uart_puts("2\n");
+    uart_puts("2\n");*/
 
-    abort();*/
+    //abort();
 
 
     *(volatile u32 *)(V3D_BASE + V3D_CT0CA) = (u32)(u64)binning_command_buffer;
     *(volatile u32 *)(V3D_BASE + V3D_CT0EA) = (u32)(u64)binning_command_buffer + binning_command_buffer_end;
 
     while (*(volatile u32 *)(V3D_BASE + V3D_BFC) != 1) {
-        {
-            {
-                char buffer[128] = {};
-                i32_to_string(buffer, sizeof(buffer), ((*(volatile u32 *)(V3D_BASE + V3D_BFC)) & V3D_BFC_BMFCT));
-                uart_puts(buffer);
-            }
-            uart_send(' ');
-            {
-                char buffer[128] = {};
-                i32_to_string(buffer, sizeof(buffer), *(volatile u32 *)(V3D_BASE + V3D_PCS));
-                uart_puts(buffer);
-            }
-            uart_send('\n');
-        }
+        
+        /*uart_i32(*(volatile u32 *)(V3D_BASE + V3D_BFC));
+        uart_putc(' ');
+        uart_i32(*(volatile u32 *)(V3D_BASE + V3D_PCS));
+        uart_putc('\n');*/
     }
 
     *(volatile u32 *)(V3D_BASE + V3D_BFC) = 0;
@@ -230,20 +240,11 @@ void v3d_draw(i32 width, i32 height)
     *(volatile u32 *)(V3D_BASE + V3D_CT1EA) = (u32)(u64)render_command_buffer + render_command_buffer_end;
 
     while (((*(volatile u32 *)(V3D_BASE + V3D_BFC))) != 1) {
-        {
-            {
-                char buffer[128] = {};
-                i32_to_string(buffer, sizeof(buffer), *(volatile u32 *)(V3D_BASE + V3D_BFC));
-                uart_puts(buffer);
-            }
-            uart_send(' ');
-            {
-                char buffer[128] = {};
-                i32_to_string(buffer, sizeof(buffer), *(volatile u32 *)(V3D_BASE + V3D_PCS));
-                uart_puts(buffer);
-            }
-            uart_send('\n');
-        }
+
+        /*uart_i32(*(volatile u32 *)(V3D_BASE + V3D_BFC));
+        uart_putc(' ');
+        uart_i32(*(volatile u32 *)(V3D_BASE + V3D_PCS));
+        uart_putc('\n');*/
     }
 
     *(volatile u32 *)(V3D_BASE + V3D_BFC) = 0;

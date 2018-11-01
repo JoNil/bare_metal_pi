@@ -60,9 +60,7 @@ void main()
             dy = 1;
             y = 100;
         }
-
-        //__builtin_mempcpy();
-
+        
         //framebuffer_clear();
 
         v3d_draw(1280, 720);
@@ -77,7 +75,7 @@ void main()
 
             framebuffer_text(12, 14, buffer);
             uart_puts(buffer);
-            uart_send('\n');
+            uart_putc('\n');
         }
 
         framebuffer_swap();
