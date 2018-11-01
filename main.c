@@ -78,6 +78,8 @@ void main()
 
         framebuffer_swap();
 
+        abort();
+
         u64 end = time_usec();
         last_frame_time = (i32)(end - start);
     }
