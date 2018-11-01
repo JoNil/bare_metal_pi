@@ -60,7 +60,7 @@ void main()
             dy = 1;
             y = 100;
         }
-        
+
         //framebuffer_clear();
 
         v3d_draw(1280, 720);
@@ -79,6 +79,8 @@ void main()
         }
 
         framebuffer_swap();
+
+        abort();
 
         u64 end = time_usec();
         last_frame_time = (i32)(end - start);
