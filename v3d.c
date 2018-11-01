@@ -132,6 +132,7 @@ void v3d_draw(i32 width, i32 height)
                 (height + 63) / 64,
                 TILE_BINNING_FLAGS_AUTO_INITIALISE_TILE_STATE_DATA_ARRAY);
         v3d_cb_start_tile_binning(&cb);
+        v3d_cb_increment_semaphore(&cb);
 
         v3d_cb_clip_window(&cb, 0, 0, width, height);
         
@@ -157,6 +158,8 @@ void v3d_draw(i32 width, i32 height)
         v3d_command_builder_t cb = {};
 
         v3d_cb_init(&cb, render_command_buffer, ARRAY_COUNT(render_command_buffer));
+
+        v3d_cb_wait_on_semaphore(&cb);
 
         v3d_cb_clear_colors(&cb, 0xff240A30ff240A30, 0, 0, 0);
 
