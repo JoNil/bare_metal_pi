@@ -1,5 +1,6 @@
 #include "snprintf.h"
 #include "types.h"
+#include "uart.h"
 
 static u32 strlen(const char *s)
 {
@@ -54,7 +55,7 @@ struct mini_buff {
     u32 buffer_len;
 };
 
-static int putc(i32 ch, struct mini_buff *b)
+static int putc(i32 ch, struct mini_buff * b)
 {
     if ((u32)((b->pbuffer - b->buffer) + 1) >= b->buffer_len) {
         return 0;
@@ -64,7 +65,7 @@ static int putc(i32 ch, struct mini_buff *b)
     return 1;
 }
 
-static int puts(char *s, u32 len, struct mini_buff *b)
+static int puts(char * s, u32 len, struct mini_buff * b)
 {
     u32 i;
 
@@ -83,20 +84,22 @@ static int puts(char *s, u32 len, struct mini_buff *b)
 
 i32 vsnprintf(char * buffer, u32 buffer_len, const char * fmt, __builtin_va_list va)
 {
-    struct mini_buff b = {0};
-    char bf[24] = {0};
+    struct mini_buff b = {};
+    char bf[24] = {};
     char ch = 0;
+
+    uart_puts("Hej");
 
     b.buffer = buffer;
     b.pbuffer = buffer;
     b.buffer_len = buffer_len;
 
-    while ((ch=*(fmt++))) {
+    while ((ch = *(fmt++))) {
         if ((u32)((b.pbuffer - b.buffer) + 1) >= b.buffer_len) {
             break;
         }
 
-        if (ch!='%') {
+        if (ch != '%') {
             putc(ch, &b);
         } else {
             char zero_pad = 0;
@@ -105,15 +108,15 @@ i32 vsnprintf(char * buffer, u32 buffer_len, const char * fmt, __builtin_va_list
 
             ch = *(fmt++);
 
-            if (ch=='0') {
-                ch=*(fmt++);
+            if (ch == '0') {
+                ch =* (fmt++);
                 if (ch == '\0') {
                     goto end;
                 }
                 if (ch >= '0' && ch <= '9') {
                     zero_pad = ch - '0';
                 }
-                ch=*(fmt++);
+                ch = *(fmt++);
             }
 
             switch (ch) {
@@ -154,6 +157,8 @@ end:
 
 i32 snprintf(char * buffer, u32 buffer_len, const char *fmt, ...)
 {
+    uart_puts("Hej");
+
     __builtin_va_list va;
     __builtin_va_start(va, fmt);
     i32 ret = vsnprintf(buffer, buffer_len, fmt, va);

@@ -86,6 +86,10 @@ void reload_initial(const char * date)
 
     // Restore arguments and jump to the new kernel.
     asm volatile (
+
+        // Invalidate i cache
+        "ic iallu;"
+
         "mov x0, x10;"
         "mov x1, x11;"
         "mov x2, x12;"
